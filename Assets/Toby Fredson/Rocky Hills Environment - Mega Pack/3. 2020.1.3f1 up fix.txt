@@ -1,0 +1,7 @@
+In case the shaders for Unity 2020.1.3f1 up don't work on newer versions, apply either one of the fix packages that works for your version:
+
+"RHE (HDRP)-2020.2x_Shaders fix"
+"RHE (HDRP)-2020.2x_Shaders fix_b"
+"RHE (URP) -2020.2x_Shaders fix"
+
+If you notice the the othet shaders work but CTI doesn't, then just skip these and install the Custom tree importer (CTI) fixes from the support folder. You can find the version support packages in the ---> "Third Party Tools" ---> "Custom Tree Importer v3" ---> "Pipeline Support" folder, if neeeded!

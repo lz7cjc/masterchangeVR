@@ -1,0 +1,3 @@
+1. Custom Amplify shaders
+
+Feel free to edit and use these in the Amplify shader editor, ready for use in your projects!
