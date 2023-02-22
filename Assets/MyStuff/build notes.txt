@@ -1,0 +1,10 @@
+﻿update path to save user information on these files:
+dynamicloadvideo
+coefficient
+learning
+habits
+habits2
+results
+StatusScore
+
+enter password for key
