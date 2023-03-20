@@ -220,8 +220,9 @@ public class showhide3d : MonoBehaviour
 
         else if (nextscene == "film")
         {
-           // SceneManager.LoadScene("videoplayer");
-            SceneManager.LoadScene("videoplayer", LoadSceneMode.Additive);
+            // SceneManager.LoadScene("videoplayer");
+            //   SceneManager.LoadScene("videoplayer", LoadSceneMode.Additive);
+            SceneManager.LoadScene("videoplayer");
             //    Debug.Log("^^^ films");
             //    notFilms.SetActive(false);
             //    terrain.SetActive(false);
