@@ -233,7 +233,8 @@ public class filmvotes2 : MonoBehaviour
         //showhide3d.ResetScene();
         PlayerPrefs.DeleteKey("VideoUrl");
         //SceneManager.LoadScene("mainVR");
-        SceneManager.LoadScene("mainVR", LoadSceneMode.Additive);
+        //SceneManager.LoadScene("mainVR", LoadSceneMode.Additive);
+        SceneManager.LoadScene("mainVR");
 
         //////////////////////////////////////////////
         ///
