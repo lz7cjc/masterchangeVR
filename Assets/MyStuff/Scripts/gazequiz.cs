@@ -17,7 +17,8 @@ public class gazequiz : MonoBehaviour
     public GameObject right;
 
     private string stage;
-   
+    private allquizquestions allquizquestions;
+    private quizanswers quizanswers;
 
     void Update()
     {
@@ -37,8 +38,25 @@ public class gazequiz : MonoBehaviour
                 //put the action required here
                 if (stage == "quiz")
                 {
+                    intro.SetActive(true);
+                    quiz.SetActive(false);
+                    answer.SetActive(false);
+                    allquizquestions = FindObjectOfType<allquizquestions>();
+
+                    allquizquestions.CallRegisterCoroutine();
+                }
+
+                if (stage == "displayAnswers")
+                {
                     intro.SetActive(false);
                     quiz.SetActive(true);
+                    answer.SetActive(false);
+                    quizanswers = FindObjectOfType<quizanswers>();
+                    quizanswers.CallRegisterCoroutine();
+                } if (stage == "quiz")
+                {
+                    intro.SetActive(true);
+                    quiz.SetActive(false);
                     answer.SetActive(false);
                 }
                 else if (stage == "answer")
@@ -48,6 +66,9 @@ public class gazequiz : MonoBehaviour
                     answer.SetActive(true);
                     wrong.SetActive(false);
                     right.SetActive(true);
+                    //send questionid to the database
+                    // set the answerCorrect to true
+                    //send the user id 
                 }
                 else if (stage == "wronganswer")
                 {
@@ -56,6 +77,9 @@ public class gazequiz : MonoBehaviour
                     answer.SetActive(true);
                     wrong.SetActive(true);
                     right.SetActive(false);
+                    //send questionid to the database
+                    // set the answerCorrect to false
+                    //send the user id 
                 }
 
             }
@@ -63,7 +87,7 @@ public class gazequiz : MonoBehaviour
     }
 
     // mouse Enter event
-    public void launchQuiz()
+    public void getQuiz()
     {
         Debug.Log("setting look");
         // Markername = ObjectName;
@@ -71,22 +95,38 @@ public class gazequiz : MonoBehaviour
         stage = "quiz";
 
     }
-    public void getcorrectanswer()
+
+    public void displayAnswers()
     {
         Debug.Log("setting look");
         // Markername = ObjectName;
         mousehover = true;
-        stage = "answer";
+        stage = "displayAnswers";
 
     }
-    public void getincorrectanswer()
+    public void getanswer(int answerID)
     {
         Debug.Log("setting look");
         // Markername = ObjectName;
         mousehover = true;
-        stage = "wronganswer";
+        if (answerID == PlayerPrefs.GetInt("correctAnswer"))
+        {
+            stage = "answer";
+        }
+       else
+        {
+            stage = "wronganswer";
+        }
 
     }
+    //public void getincorrectanswer()
+    //{
+    //    Debug.Log("setting look");
+    //    // Markername = ObjectName;
+    //    mousehover = true;
+    //    stage = "wronganswer";
+
+    //}
 
     // mouse Exit Event
     public void MouseExit()

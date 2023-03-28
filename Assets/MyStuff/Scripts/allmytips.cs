@@ -103,7 +103,7 @@ public class allmytips : MonoBehaviour
             {
                 PlayerTipsJSON loadedPlayerData = JsonUtility.FromJson<PlayerTipsJSON>(json);
 
-                Debug.Log(loadedPlayerData.data[0].ContentBody + "\n");
+                Debug.Log("check abc" + loadedPlayerData.data[0].ContentBody + "\n");
                  
                 ContentTitle.text = loadedPlayerData.data[0].ContentBody;
                 ContentBody.text = loadedPlayerData.data[0].ContentBody;
@@ -112,8 +112,9 @@ public class allmytips : MonoBehaviour
             else
             {
                 PlayerTipsJSON loadedPlayerData = JsonUtility.FromJson<PlayerTipsJSON>(json);
-            //    Debug.Log(loadedPlayerData.data[0].ContentBody + "\n");
-                 ContentBody.text = loadedPlayerData.data[0].ContentBody;
+                Debug.Log("check abc" + loadedPlayerData.data[0].ContentBody + "\n");
+                //    Debug.Log(loadedPlayerData.data[0].ContentBody + "\n");
+                ContentBody.text = loadedPlayerData.data[0].ContentBody;
             }
         }
     }

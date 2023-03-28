@@ -29,13 +29,18 @@ public class getriros : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-           if (PlayerPrefs.HasKey("dbuserid"))
+        checkPPforRiros();
+      
+}
+
+    public void checkPPforRiros()
+    {
+        if (PlayerPrefs.HasKey("dbuserid"))
         {
             DBuser = PlayerPrefs.GetInt("dbuserid");
             StartCoroutine(getRirosDB());
         }
-      
-}
+    }
     // Update is called once per frame
    
     IEnumerator getRirosDB()

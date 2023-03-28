@@ -32,17 +32,22 @@ public class justGetRiros : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        fromPPorDB();
+    }
+
+    public void fromPPorDB()
+    {
         if (!PlayerPrefs.HasKey("dbuserid"))
         {
             rirosValue.text = PlayerPrefs.GetString("rirosBalance");
-           
-        }
-        else 
-        { 
-        getRiros();
-        }
-    }
 
+        }
+        else
+        {
+            getRiros();
+        }
+
+    }
     public void getRiros()
     {
    
