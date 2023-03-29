@@ -17,7 +17,8 @@ public class quizanswers : MonoBehaviour
     public TMP_Text answer3;
     public TMP_Text answer4;
     public TMP_Text correctAnswer;
-    
+    public TMP_Text explanation;
+
     //public Text ContentBody1;
     //public Text ContentBody2;
     //  private int dbuserid;
@@ -92,12 +93,15 @@ public class quizanswers : MonoBehaviour
             answer3.text = loadAnswers.data[2].answer;
             answer4.text = loadAnswers.data[3].answer;
 
+            
+
             for (int i = 0; i < loadAnswers.data.Count; i++)
             {
                  if (loadAnswers.data[i].correct == 1)
                 {
                     PlayerPrefs.SetInt("correctAnswer", i);
                     correctAnswer.text = loadAnswers.data[i].answer;
+                    explanation.text = loadAnswers.data[i].explanation;
                 }
             }
         }
@@ -117,7 +121,7 @@ public class quizanswers : MonoBehaviour
         // public string fromJSONusername;
         public string answer;
         public int correct;
-
+        public string explanation;
         //  public int User_ID;
         //  public int value;
         //  public bool boolean;

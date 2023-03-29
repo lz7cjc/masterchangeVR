@@ -14,6 +14,8 @@ public class allquizquestions : MonoBehaviour
 {
     public TMP_Text question;
     public TMP_Text behaviour;
+    public TMP_Text behaviourAnswers;
+    public TMP_Text behaviourFinish;
     public TMP_Text entryCost;
     public TMP_Text prize;
     public TMP_Text reviewQuestion;
@@ -85,20 +87,27 @@ public class allquizquestions : MonoBehaviour
             System.Random random = new System.Random();
             int i = random.Next(n);
             Debug.Log("questions" + loadQuestions.data[i].question + "\n");
+            Debug.Log("quiz_id ids" + loadQuestions.data[i].quiz_id + "\n");
             Debug.Log("prize" + loadQuestions.data[i].prize.ToString());
-            Debug.Log("Behaviour_Description" + loadQuestions.data[i].Behaviour_Description);
+            Debug.Log("Behaviour_Description" + loadQuestions.data[i].Behaviour_Type);
 
        
             Debug.Log("random number: " + i );
             question.text = loadQuestions.data[i].question;
             reviewQuestion.text = loadQuestions.data[i].question;
             repeatQuestion.text = loadQuestions.data[i].question;
-            behaviour.text = loadQuestions.data[i].Behaviour_Description;
+            behaviour.text = loadQuestions.data[i].Behaviour_Type;
+            behaviourAnswers.text = loadQuestions.data[i].Behaviour_Type;
+            behaviourFinish.text = loadQuestions.data[i].Behaviour_Type;
+            PlayerPrefs.SetString("quizPrize", loadQuestions.data[i].prize.ToString());
+
             finalCost.text = "You lost R$" + loadQuestions.data[i].cost.ToString() + "- learn more by exploring MasterChange";
-            finalPrize.text = "Congratulations - you won R$ " + loadQuestions.data[i].prize.ToString() + "knowledge is power; explore MasterChange for more";
+            finalPrize.text = "Congratulations - you won R$ " + loadQuestions.data[i].prize.ToString() + "- knowledge is power; explore MasterChange for even more";
             entryCost.text = loadQuestions.data[i].cost.ToString() ;
             prize.text = loadQuestions.data[i].prize.ToString() ;
             PlayerPrefs.SetInt("questionID", loadQuestions.data[i].quiz_id);
+            PlayerPrefs.SetInt("quizPrice", loadQuestions.data[i].cost);
+
         }
 
     }
@@ -116,7 +125,7 @@ public class allquizquestions : MonoBehaviour
         // public string fromJSONusername;
         public int quiz_id;
         public string question;
-        public string Behaviour_Description;
+        public string Behaviour_Type;
         public int cost;
         public int prize;
 

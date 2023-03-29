@@ -16,8 +16,10 @@ public class gazequiz : MonoBehaviour
     public GameObject wrong;
     public GameObject right;
 
+    private justSetGetRiros justSetGetRiros;
     private string stage;
     private allquizquestions allquizquestions;
+    private justSetGetRirosDynamic justSetGetRirosDynamic;
     private quizanswers quizanswers;
 
     void Update()
@@ -42,7 +44,6 @@ public class gazequiz : MonoBehaviour
                     quiz.SetActive(false);
                     answer.SetActive(false);
                     allquizquestions = FindObjectOfType<allquizquestions>();
-
                     allquizquestions.CallRegisterCoroutine();
                 }
 
@@ -53,7 +54,12 @@ public class gazequiz : MonoBehaviour
                     answer.SetActive(false);
                     quizanswers = FindObjectOfType<quizanswers>();
                     quizanswers.CallRegisterCoroutine();
-                } if (stage == "quiz")
+                    justSetGetRirosDynamic = FindObjectOfType<justSetGetRirosDynamic>();
+                    justSetGetRirosDynamic.toPayOut("rirosSpent", PlayerPrefs.GetInt("quizPrice"));
+
+
+                }
+                if (stage == "quiz")
                 {
                     intro.SetActive(true);
                     quiz.SetActive(false);
@@ -103,6 +109,7 @@ public class gazequiz : MonoBehaviour
         mousehover = true;
         stage = "displayAnswers";
 
+        
     }
     public void getanswer(int answerID)
     {
@@ -112,6 +119,8 @@ public class gazequiz : MonoBehaviour
         if (answerID == PlayerPrefs.GetInt("correctAnswer"))
         {
             stage = "answer";
+            justSetGetRirosDynamic = FindObjectOfType<justSetGetRirosDynamic>();
+            justSetGetRirosDynamic.toPayOut("rirosEarnt", PlayerPrefs.GetInt("quizPrize"));
         }
        else
         {
