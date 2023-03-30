@@ -99,7 +99,7 @@ public class allquizquestions : MonoBehaviour
             behaviour.text = loadQuestions.data[i].Behaviour_Type;
             behaviourAnswers.text = loadQuestions.data[i].Behaviour_Type;
             behaviourFinish.text = loadQuestions.data[i].Behaviour_Type;
-            PlayerPrefs.SetString("quizPrize", loadQuestions.data[i].prize.ToString());
+            PlayerPrefs.SetInt("quizPrize", loadQuestions.data[i].prize);
 
             finalCost.text = "You lost R$" + loadQuestions.data[i].cost.ToString() + "- learn more by exploring MasterChange";
             finalPrize.text = "Congratulations - you won R$ " + loadQuestions.data[i].prize.ToString() + "- knowledge is power; explore MasterChange for even more";

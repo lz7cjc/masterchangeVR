@@ -22,6 +22,14 @@ public class gazequiz : MonoBehaviour
     private justSetGetRirosDynamic justSetGetRirosDynamic;
     private quizanswers quizanswers;
 
+    private void Start()
+    {
+        intro.SetActive(true);
+        quiz.SetActive(false);
+        answer.SetActive(false);
+        allquizquestions = FindObjectOfType<allquizquestions>();
+        allquizquestions.CallRegisterCoroutine();
+    }
     void Update()
     {
         //Debug.Log("counter level" + Counter);
@@ -52,11 +60,11 @@ public class gazequiz : MonoBehaviour
                     intro.SetActive(false);
                     quiz.SetActive(true);
                     answer.SetActive(false);
+                    justSetGetRirosDynamic = FindObjectOfType<justSetGetRirosDynamic>();
+                    int quizPrice = PlayerPrefs.GetInt("quizPrice");
+                    justSetGetRirosDynamic.toPayOut("Spent", quizPrice);
                     quizanswers = FindObjectOfType<quizanswers>();
                     quizanswers.CallRegisterCoroutine();
-                    justSetGetRirosDynamic = FindObjectOfType<justSetGetRirosDynamic>();
-                    justSetGetRirosDynamic.toPayOut("rirosSpent", PlayerPrefs.GetInt("quizPrice"));
-
 
                 }
                 if (stage == "quiz")
@@ -72,6 +80,11 @@ public class gazequiz : MonoBehaviour
                     answer.SetActive(true);
                     wrong.SetActive(false);
                     right.SetActive(true);
+                    int quizPrize = PlayerPrefs.GetInt("quizPrize");
+                    Debug.Log("quiz prize before calling function£££" + quizPrize);
+                    justSetGetRirosDynamic = FindObjectOfType<justSetGetRirosDynamic>();
+                    justSetGetRirosDynamic.toPayOut("Earnt", quizPrize);
+
                     //send questionid to the database
                     // set the answerCorrect to true
                     //send the user id 
@@ -119,9 +132,7 @@ public class gazequiz : MonoBehaviour
         if (answerID == PlayerPrefs.GetInt("correctAnswer"))
         {
             stage = "answer";
-            justSetGetRirosDynamic = FindObjectOfType<justSetGetRirosDynamic>();
-            justSetGetRirosDynamic.toPayOut("rirosEarnt", PlayerPrefs.GetInt("quizPrize"));
-        }
+          }
        else
         {
             stage = "wronganswer";

@@ -28,26 +28,19 @@ public class justSetGetRirosDynamic : MonoBehaviour
 
     public void toPayOut(string typeOfRiros, int postValue)
         {
-        Debug.Log("value coming from gazequiz" + typeOfRiros);
+        Debug.Log("###value coming from gazequiz" + typeOfRiros + "amount" + postValue);
         Switchscene = globalvariables.Instance.nextScene;
         StartCoroutine(SetRirosDB(typeOfRiros, postValue));
       }
 
     private IEnumerator SetRirosDB(string riroType, int valuePost)
     {
-   //     Debug.Log("rirotype is; " + riroType);
-    //    Debug.Log("rirosValue is; " + rirosValue);
-    //    Debug.Log("description is; " + description);
+        Debug.Log("###rirotype is " + riroType + "amount2" + valuePost);
+       // Debug.Log("###rirosValue is; " + rirosValue);
+      //  Debug.Log("###description is; " + description);
         WWWForm form = new WWWForm();
         form.AddField("riroType", riroType);
-        if (riroType == "earnt")
-        {
-            form.AddField("rirosValue", PlayerPrefs.GetInt("quizPrice"));
-        }
-        else if (riroType == "quizCost")
-        {
-            form.AddField("rirosValue", PlayerPrefs.GetInt("quizCost"));
-        }
+        form.AddField("rirosValue", valuePost);
         form.AddField("description", "Quiz");
         DBuser = PlayerPrefs.GetInt("dbuserid");
         form.AddField("userid", DBuser);
@@ -64,14 +57,14 @@ public class justSetGetRirosDynamic : MonoBehaviour
         else
         {      
                  string json = www.downloadHandler.text;
-      //      Debug.Log("returning riros srting: " + json);
+            Debug.Log("###returning riros srting: " + json);
             riros riros = JsonUtility.FromJson<riros>(json); 
           int rirosEarntOut = riros.Earnt;
             int rirosBoughtOut = riros.Bought;
             int rirosSpentOut = riros.Spent;
-            Debug.LogWarning("riros earnt" + rirosEarntOut);
-            Debug.LogWarning("riros rirosBought" + rirosBought);
-            Debug.LogWarning("riros rirosSpent" + rirosSpentOut);
+            Debug.LogWarning("###riros earnt" + rirosEarntOut);
+            Debug.LogWarning("###riros rirosBought" + rirosBought);
+            Debug.LogWarning("###riros rirosSpent" + rirosSpentOut);
 
             PlayerPrefs.SetInt("rirosEarnt", rirosEarntOut);
             PlayerPrefs.SetInt("rirosBought", rirosBoughtOut);
