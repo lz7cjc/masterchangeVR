@@ -60,6 +60,11 @@ public class register : MonoBehaviour
         prerirosBalance = PlayerPrefs.GetInt("rirosBalance");
         returnToScene = PlayerPrefs.GetString("returntoscene");
 
+        usernameField.text = "ff88fgdafh";
+        passwordField.text = "34534535dg";
+        dob.text = "1934";
+        email.text = "nik@beriro.co.uk";
+
         Debug.Log("iii behaviour and return to scene: " + behaviour + returnToScene);
 #if UNITY_ANDROID
 
@@ -200,25 +205,30 @@ public class register : MonoBehaviour
             }
             else if (json == "2:name check query failed")
             {
-                errorMessage.text = "Sorry, we failed to connect to the mothership. Please try again";
+                errorMessage.text = "Sorry, we failed to check if that username is in use. Error Code - 2. Please try again";
             }
-            else if (json == "4: Registration failed")
+            else if (json == "0: DB Connection failed")
             {
-                errorMessage.text = "Sorry, we failed to connect to the mothership. Please try again";
+                errorMessage.text = "Sorry, we failed to connect to the database. Error Code - 002. Please try again";
             }
-            else if (json == "4: User Settings failed to update")
+            else if (json == "Registration insert record failed")
             {
-                errorMessage.text = "Sorry, we failed to connect to the mothership. Please try again";
+                errorMessage.text = "Sorry, we failed to connect. Error Code - 4 . Please try again";
             }
-            else if (json == "5: Riro entry failed")
+            else if (json == "5: User Settings failed to update")
             {
-                errorMessage.text = "Sorry, we failed to connect to the mothership. Please try again";
+                errorMessage.text = "Your account has been created with errors. Please email useraccounts@masterchange.today with the error code 4001";
+            }
+            else if (json == "6: Riro entry failed")
+            {
+                errorMessage.text = "Your account has been created but your R$ didn't update. This will be resolved the next time you earn, spend or buy riros";
             }
 
 
             else
 
             {
+                Debug.Log("json returned after data entry" + json);
                 UserData UserData = JsonUtility.FromJson<UserData>(json);
 
                 string userid = UserData.UserID;

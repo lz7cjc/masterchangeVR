@@ -25,9 +25,9 @@ public class quizanswers : MonoBehaviour
     //public int contenttype;
     //public bool title;
     //remote
-    //  string posturl = "http://masterchange.today/php_scripts/quizanswers.php";
+      string posturl = "http://masterchange.today/php_scripts/quizanswers.php";
 
-    readonly string posturl = "http://localhost/php_scripts/quizanswers.php";
+    //readonly string posturl = "http://localhost/php_scripts/quizanswers.php";
     //private string userInt;
 
     
@@ -58,6 +58,7 @@ public class quizanswers : MonoBehaviour
     IEnumerator GetAnswers()
     {
         Debug.Log("in the IEnumerator");
+        Debug.Log("questionID" + PlayerPrefs.GetInt("questionID"));
 
         WWWForm form = new WWWForm();
         form.AddField("questionId", PlayerPrefs.GetInt("questionID"));
@@ -85,8 +86,7 @@ public class quizanswers : MonoBehaviour
             Debug.Log("loadAnswers" + loadAnswers.data[1].answer + "\n");
             Debug.Log("loadAnswers" + loadAnswers.data[2].answer + "\n");
             Debug.Log("loadAnswers" + loadAnswers.data[3].answer + "\n");
-            //Debug.Log("prize" + loadAnswers.data[0].prize.ToString());
-            //Debug.Log("Behaviour_Description" + loadAnswers.data[0].Behaviour_Description); 
+       
 
             answer1.text = loadAnswers.data[0].answer;
             answer2.text = loadAnswers.data[1].answer;

@@ -16,10 +16,12 @@ public class checkregistered : MonoBehaviour
         {
             DBuser = PlayerPrefs.GetInt("dbuserid");
             registered = true;
+            Debug.Log("is registered");
         }
         else
         {
             registered = false;
+            Debug.Log("is not registered");
         }
         Validation();
     }
@@ -33,12 +35,14 @@ public class checkregistered : MonoBehaviour
     public void Validation()
     {
         if (registered)
-        { 
-        buybuttons.SetActive(true);
+        {
+            Debug.Log("is registered fn");
+            buybuttons.SetActive(true);
         registernow.SetActive(false);
         }
         else if (!registered)
         {
+            Debug.Log("is not registered fn");
             buybuttons.SetActive(false);
             registernow.SetActive(true);
 

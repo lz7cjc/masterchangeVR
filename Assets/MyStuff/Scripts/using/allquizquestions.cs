@@ -22,15 +22,23 @@ public class allquizquestions : MonoBehaviour
     public TMP_Text repeatQuestion;
     public TMP_Text finalCost;
     public TMP_Text finalPrize;
+
+  //  public GameObject goBtn;
+    public GameObject newQuBtn;
+   // public GameObject dashboardBtn;
+    public GameObject entryFeeToHide;
+    public GameObject prizeToHide;
+    public GameObject questionSection;
+    public GameObject NoQuestionsSection;
     //public Text ContentBody1;
     //public Text ContentBody2;
     //  private int dbuserid;
     //public int contenttype;
     //public bool title;
     //remote
-    //  string posturl = "http://masterchange.today/php_scripts/quizquestions.php";
+      string posturl = "http://masterchange.today/php_scripts/quizquestions.php";
 
-    readonly string posturl = "http://localhost/php_scripts/quizquestions.php";
+   // readonly string posturl = "http://localhost/php_scripts/quizquestions.php";
     //private string userInt;
 
     
@@ -38,6 +46,8 @@ public class allquizquestions : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+
         if (PlayerPrefs.HasKey("dbuserid"))
         {
            // dbuserid = PlayerPrefs.GetInt("dbuserid");
@@ -84,30 +94,42 @@ public class allquizquestions : MonoBehaviour
 
             AllQuestionsJSON loadQuestions = JsonUtility.FromJson<AllQuestionsJSON>(json);
             int n = loadQuestions.data.Count;
-            System.Random random = new System.Random();
-            int i = random.Next(n);
-            Debug.Log("questions" + loadQuestions.data[i].question + "\n");
-            Debug.Log("quiz_id ids" + loadQuestions.data[i].quiz_id + "\n");
-            Debug.Log("prize" + loadQuestions.data[i].prize.ToString());
-            Debug.Log("Behaviour_Description" + loadQuestions.data[i].Behaviour_Type);
+            Debug.Log("the rcord count ;;; " + n);
+            if (n == 0)
+            {
+                Debug.Log("answered all the question ;;;;");
+                questionSection.SetActive(false);
+                NoQuestionsSection.SetActive(true);
 
-       
-            Debug.Log("random number: " + i );
-            question.text = loadQuestions.data[i].question;
-            reviewQuestion.text = loadQuestions.data[i].question;
-            repeatQuestion.text = loadQuestions.data[i].question;
-            behaviour.text = loadQuestions.data[i].Behaviour_Type;
-            behaviourAnswers.text = loadQuestions.data[i].Behaviour_Type;
-            behaviourFinish.text = loadQuestions.data[i].Behaviour_Type;
-            PlayerPrefs.SetInt("quizPrize", loadQuestions.data[i].prize);
+            }
+            else
+            {
 
-            finalCost.text = "You lost R$" + loadQuestions.data[i].cost.ToString() + "- learn more by exploring MasterChange";
-            finalPrize.text = "Congratulations - you won R$ " + loadQuestions.data[i].prize.ToString() + "- knowledge is power; explore MasterChange for even more";
-            entryCost.text = loadQuestions.data[i].cost.ToString() ;
-            prize.text = loadQuestions.data[i].prize.ToString() ;
-            PlayerPrefs.SetInt("questionID", loadQuestions.data[i].quiz_id);
-            PlayerPrefs.SetInt("quizPrice", loadQuestions.data[i].cost);
 
+                System.Random random = new System.Random();
+                int i = random.Next(n);
+                Debug.Log("questions" + loadQuestions.data[i].question + "\n");
+                Debug.Log("quiz_id ids" + loadQuestions.data[i].quiz_id + "\n");
+                Debug.Log("prize" + loadQuestions.data[i].prize.ToString());
+                Debug.Log("Behaviour_Description" + loadQuestions.data[i].Behaviour_Type);
+
+
+                Debug.Log("random number: " + i);
+                question.text = loadQuestions.data[i].question;
+                reviewQuestion.text = loadQuestions.data[i].question;
+                repeatQuestion.text = loadQuestions.data[i].question;
+                behaviour.text = loadQuestions.data[i].Behaviour_Type;
+                behaviourAnswers.text = loadQuestions.data[i].Behaviour_Type;
+                behaviourFinish.text = loadQuestions.data[i].Behaviour_Type;
+                PlayerPrefs.SetInt("quizPrize", loadQuestions.data[i].prize);
+
+                finalCost.text = "You lost R$" + loadQuestions.data[i].cost.ToString() + "- learn more by exploring MasterChange";
+                finalPrize.text = "Congratulations - you won R$ " + loadQuestions.data[i].prize.ToString() + "- knowledge is power; explore MasterChange for even more";
+                entryCost.text = loadQuestions.data[i].cost.ToString();
+                prize.text = loadQuestions.data[i].prize.ToString();
+                PlayerPrefs.SetInt("questionID", loadQuestions.data[i].quiz_id);
+                PlayerPrefs.SetInt("quizPrice", loadQuestions.data[i].cost);
+            }
         }
 
     }

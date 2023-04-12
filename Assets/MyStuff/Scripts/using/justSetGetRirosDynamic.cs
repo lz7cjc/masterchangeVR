@@ -16,8 +16,8 @@ public class justSetGetRirosDynamic : MonoBehaviour
     private bool rirosSpent;
     private string riroType;
 
- //   string posturl = "http://masterchange.today/php_scripts/setgetriros.php";
-    string posturl = "http://localhost/php_scripts/setgetriros.php";
+    string posturl = "http://masterchange.today/php_scripts/setgetriros.php";
+ //   string posturl = "http://localhost/php_scripts/setgetriros.php";
     private string Switchscene ;
 
     /// <summary>

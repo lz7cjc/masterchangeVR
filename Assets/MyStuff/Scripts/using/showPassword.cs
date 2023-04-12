@@ -9,17 +9,17 @@ public class showPassword : MonoBehaviour
     public Toggle show;
     public void Update()
     {
-        Debug.Log("am i showing? " + show.isOn);
+      //  Debug.Log("am i showing? " + show.isOn);
         if (show.isOn)
         {
-            Debug.Log("switching to showing");
+            //Debug.Log("switching to showing");
             passwordField.contentType = InputField.ContentType.Standard;
             passwordField.ForceLabelUpdate();
         }
 
         else
         {
-            Debug.Log("switching to hiding");
+            //Debug.Log("switching to hiding");
             passwordField.contentType = InputField.ContentType.Password;
             passwordField.ForceLabelUpdate();
         }
