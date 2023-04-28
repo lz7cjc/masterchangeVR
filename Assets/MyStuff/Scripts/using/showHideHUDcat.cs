@@ -4,17 +4,38 @@ using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
 using System.Net;
+using Unity;
 
 public class showHideHUDcat : MonoBehaviour
 {
 
-    public bool mousehover = false;
+    /// <summary>
+    /// //display the zones sub menu on the mainvr hud////////
+    /// </summary>
+    /// 
 
+    public bool mousehover = false;
+   // public GameObject altImage;
     public float Counter = 0;
    // public bool turnoff;
    public GameObject zones;
     //  public GameObject hud;
     private bool turnon = true;
+
+    public SpriteRenderer spriteRenderer;
+    public Sprite newSprite;
+    public Sprite oldSprite;
+    void ChangeSprite(bool state)
+    {
+        if (state)
+        {
+            spriteRenderer.sprite = newSprite;
+        }
+        else
+        {
+            spriteRenderer.sprite = oldSprite;
+        }
+    }
 
     void Update()
     {
@@ -58,14 +79,16 @@ public class showHideHUDcat : MonoBehaviour
     {
         
         mousehover = true;
+        ChangeSprite(true);
+
     }
 
     // mouse Exit Event
     public void MouseExit()
     {
 
-       
-        mousehover = false;
+        ChangeSprite(false);
+         mousehover = false;
         Counter = 0;
     }
 

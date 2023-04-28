@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.UI;
-
+using TMPro;
 
 //this is used when coming from a different scene
 public class showfilm : MonoBehaviour
@@ -25,7 +25,7 @@ public class showfilm : MonoBehaviour
     public float counter = 0;
    // public GameObject Panel;
 
-    public Text videoTime;
+    public TMP_Text videoTime;
     private LightShaft.Scripts.YoutubePlayer youtubePlayer;
     private string videoURLPP;
     private string returntoscene;
@@ -37,8 +37,9 @@ public class showfilm : MonoBehaviour
         //Player.useGravity = true;
         Debug.Log("^^^ start");
         playfilm();
-    
-        
+        tipSection.SetActive(false);
+        filmSection.SetActive(true);
+
     }
 
 

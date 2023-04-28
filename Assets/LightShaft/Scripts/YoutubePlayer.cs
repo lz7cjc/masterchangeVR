@@ -131,7 +131,11 @@ namespace LightShaft.Scripts
             else
             {
                 videoPlayer.Play();
-                audioPlayer.GetTargetAudioSource(0).volume = _controller.volumeSlider.value;
+                if (_controller.volumeSlider != null)
+                    audioPlayer.GetTargetAudioSource(0).volume = _controller.volumeSlider.value;
+                else
+                    audioPlayer.GetTargetAudioSource(0).volume = 1;
+
                 if (!noAudioAtacched)
                 {
                     //audioPlayer.Play(); //TODO check other unity versions
@@ -318,8 +322,12 @@ namespace LightShaft.Scripts
 
         private void OnApplicationQuit()
         {
-            if (videoPlayer.targetTexture != null)
-                videoPlayer.targetTexture.Release();
+            if(videoPlayer != null)
+            {
+                if (videoPlayer.targetTexture != null)
+                    videoPlayer.targetTexture.Release();
+            }
+            
 
             if (!playUsingInternalDevicePlayer)
             {

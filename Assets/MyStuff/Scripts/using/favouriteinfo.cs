@@ -5,10 +5,11 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class favouriteinfo : MonoBehaviour
 {
-    public Text favInstructions;
+    public TMP_Text favInstructions;
     public GameObject heart;
     public GameObject register;
     // Start is called before the first frame update

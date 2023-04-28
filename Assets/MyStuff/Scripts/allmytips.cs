@@ -109,10 +109,10 @@ public class allmytips : MonoBehaviour
                 ContentBody.text = loadedPlayerData.data[0].ContentBody;
             }
 
-            else
+            else if (!title)
             {
                 PlayerTipsJSON loadedPlayerData = JsonUtility.FromJson<PlayerTipsJSON>(json);
-                Debug.Log("check abc" + loadedPlayerData.data[0].ContentBody + "\n");
+                Debug.Log("check abcn" + loadedPlayerData.data[0].ContentBody + "\n");
                 //    Debug.Log(loadedPlayerData.data[0].ContentBody + "\n");
                 ContentBody.text = loadedPlayerData.data[0].ContentBody;
             }

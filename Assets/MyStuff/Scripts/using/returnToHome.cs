@@ -20,6 +20,9 @@ public class returnToHome : MonoBehaviour
     private int trainingDone;
     private floorceilingmove floorceilingmove;
 
+    public SpriteRenderer spriterenderer;
+    public Sprite spriteDefault;
+    public Sprite spriteSwitch;
 
     //////
     /// <summary>
@@ -108,10 +111,16 @@ public class returnToHome : MonoBehaviour
      //   Debug.Log("setting walk");
         // Markername = ObjectName;
         mousehover = true;
-          
-       
-    
+
     }
+    public void MouseHoverChangeSceneHud()
+    {
+        //   Debug.Log("setting walk");
+        // Markername = ObjectName;
+        mousehover = true;
+        spriterenderer.sprite = spriteSwitch;
+    }
+
 
     // mouse Exit Event
     public void MouseExit()
@@ -122,6 +131,14 @@ public class returnToHome : MonoBehaviour
         Counter = 0;
     }
 
+    public void MouseExitHUD()
+    {
+        //   Debug.Log("cancelling walk");
+        // Markername = "";
+        mousehover = false;
+        Counter = 0;
+        spriterenderer.sprite = spriteDefault;
+    }
     private void showandhide()
     {
         Debug.Log("calling showhide3d kkk");

@@ -33,7 +33,7 @@ public class showhide3d : MonoBehaviour
     public GameObject targetalcohol4;
     public GameObject waitingtgt;
   //  public GameObject targetfilm;
-    public GameObject targettip;
+   // public GameObject targettip;
 
     //generic films
     public GameObject targetTravel;
@@ -65,7 +65,7 @@ public class showhide3d : MonoBehaviour
     private bool toggler;
 
     //show/hide sections
-    public GameObject section_tip;
+   // public GameObject section_tip;
     public GameObject alcoholintro;
     public GameObject alcoholfollow;
     public GameObject alcoholsolution;
@@ -92,7 +92,7 @@ public class showhide3d : MonoBehaviour
     Vector3 m_EulerAngleVelocity;
 
     public GameObject hud;
-    public GameObject zones;
+   // public GameObject zones;
     private void Start()
     {
         //Player.useGravity = true;
@@ -109,7 +109,7 @@ public class showhide3d : MonoBehaviour
     ///     /// </summary>
     public void ResetScene()
     {
-        zones.SetActive(false);
+       // zones.SetActive(false);
             
             Debug.Log("^^^ resetscene");
         trainingDone = PlayerPrefs.GetInt("trainingDone");

@@ -9,10 +9,8 @@ using System.Threading;
 using Newtonsoft.Json.Linq;
 using SimpleJSON;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
-using UnityEngine.UI;
 using UnityEngine.Video;
 using YoutubeLight;
 
@@ -67,6 +65,10 @@ namespace LightShaft.Scripts
         [Space]
         [Tooltip("If it is a 360 degree video")]
         public bool is360;
+
+        [Space]
+        [Tooltip("Untick if you want to force a fullscreen mode.")]
+        public bool dontForceFullscreen = false;
 
         [Space]
         [Header("Playback Options")]
@@ -218,8 +220,6 @@ namespace LightShaft.Scripts
 
         #endregion
 
-
-
         #region BIG CODE HERE - I will redo this in the future
         //Setup the skybox for 3D or VR videos
         protected void Skybox3DSettup()
@@ -257,6 +257,7 @@ namespace LightShaft.Scripts
             //if (is360)
             //    StartCoroutine(YoutubeGeneratorSysCall(_videoUrl, _formatCode));
             //else
+
             GetNewSystem();
             //StartCoroutine(YoutubeGenerateUrlUsingClient(_videoUrl, _formatCode));
             //GetDownloadUrls(UrlsLoaded, youtubeUrl, this);
@@ -270,25 +271,34 @@ namespace LightShaft.Scripts
 
         private JObject requestResult;
         public bool forceLocal = false;
+        private bool alreadyGotUrls = false;
 
+        //When the system stops to play try to use the backup system.
+        private bool BACKUPSYSTEM = false;
         IEnumerator YoutubeGenerateUrlUsingClient(string _videoUrl, string _formatCode)
         {
+
+            alreadyGotUrls = false;
             CheckVideoUrlAndExtractThevideoId(youtubeUrl);
             WWWForm form = new WWWForm();
             //string ag = "";
-            string f = "{\"context\": {\"client\": {\"clientName\": \"ANDROID\",\"clientVersion\": \"17.31.35\",\"hl\": \"en\"}},\"videoId\": \"" + youtubeVideoID + "\",}";
+            string f = "{\"context\": {\"client\": {\"clientName\": \"ANDROID\",\"clientVersion\": \"17.31.35\",\"androidSdkVersion\": \"30\",\"hl\": \"en\"}},\"videoId\": \"" + youtubeVideoID + "\",}";
             string fweb = "{\"context\": {\"client\": {\"clientName\": \"WEB\",\"clientVersion\": \"2.20220801.00.00\"}},\"videoId\": \"" + youtubeVideoID + "\",}";
             byte[] bodyRaw = Encoding.UTF8.GetBytes(f);
-            UnityWebRequest request = UnityWebRequest.Post("https://www.youtube.com/youtubei/v1/player?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8", form);
+            //UnityWebRequest request = UnityWebRequest.Post("https://www.youtube.com/youtubei/v1/player?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8", form);
+            UnityWebRequest request = UnityWebRequest.Post("https://www.youtube.com/youtubei/v1/player?key=AIzaSyA8eiZmM1FaDVjRy-df2KTyQ_vz_yYM39w", form);
             request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
             request.SetRequestHeader("Content-Type", "application/json");
             //request.SetRequestHeader("Origin","https://www.youtube.com");
             request.SetRequestHeader("X-YouTube-Client-Name", "1");
             request.SetRequestHeader("X-YouTube-Client-Version", "2.20220801.00.00");
+            string userAgentTemporary = "com.google.android.youtube/17.31.35 (Linux; U; Android 11) gzip";
             //request.SetRequestHeader("Accept", "*/*");
             //request.SetRequestHeader("Accept-Encoding", "gzip, deflate");
-            //request.SetRequestHeader("User-Agent", "");
+            request.SetRequestHeader("User-Agent", userAgentTemporary);
             yield return request.SendWebRequest();
+            request.uploadHandler.Dispose();
+
             if (request.error != null)
             {
                 Debug.Log("Error: " + request.error);
@@ -299,15 +309,20 @@ namespace LightShaft.Scripts
                 {
                     requestResult = JObject.Parse(request.downloadHandler.text);
 
+
+                    if (debug) Debug.Log("want to write log?");
+                    //WriteLog("kelvinsxx", request.downloadHandler.text);
                     IEnumerable<ExtractionInfo> downloadUrls = ExtractDownloadUrls(requestResult);
                     youtubeVideoInfos = GetVideoInfos(downloadUrls, videoTitle).ToList();
+                    videoTitle = GetVideoTitle(requestResult);
                     is360 = false;
+                    alreadyGotUrls = true;
                     UrlsLoaded();
                 }
-               
+
 
                 //WriteLog("v", request.downloadHandler.text);
-                
+
                 if ((request.downloadHandler.text.Contains("EQUIRECTANGULAR") || request.downloadHandler.text.Contains("MESH")))
                 {
                     is360 = true;
@@ -320,9 +335,12 @@ namespace LightShaft.Scripts
                 {
                     is360 = false;
                     RenderSettings.skybox = skyboxMaterialNormal;
-                    videoPlayer.renderMode = VideoRenderMode.CameraFarPlane;
-                    videoPlayer.aspectRatio = VideoAspectRatio.FitInside;
-                    videoPlayer.targetCamera = mainCamera;
+                    if (!dontForceFullscreen && videoPlayer != null)
+                    {
+                        videoPlayer.renderMode = VideoRenderMode.CameraFarPlane;
+                        videoPlayer.aspectRatio = VideoAspectRatio.FitInside;
+                        videoPlayer.targetCamera = mainCamera;
+                    }
                     if (debug)
                         Debug.Log("No 360 video!");
                 }
@@ -353,12 +371,15 @@ namespace LightShaft.Scripts
                 }
                 else
                 {
-                    Debug.Log("wjhase");
-                    requestResult = JObject.Parse(request.downloadHandler.text);
+                    if (!alreadyGotUrls)
+                    {
+                        requestResult = JObject.Parse(request.downloadHandler.text);
 
-                    IEnumerable<ExtractionInfo> downloadUrls = ExtractDownloadUrls(requestResult);
-                    youtubeVideoInfos = GetVideoInfos(downloadUrls, videoTitle).ToList();
-                    UrlsLoaded();   //call direct to extract the video infos.
+                        IEnumerable<ExtractionInfo> downloadUrls = ExtractDownloadUrls(requestResult);
+                        youtubeVideoInfos = GetVideoInfos(downloadUrls, videoTitle).ToList();
+                        request.downloadHandler.Dispose();
+                        UrlsLoaded();   //call direct to extract the video infos.
+                    }
                 }
             }
         }
@@ -379,7 +400,7 @@ namespace LightShaft.Scripts
             yield return request.SendWebRequest();
             loadingFromServer = false;
             gettingYoutubeURL = false;
-            if (request.isHttpError)
+            if (request.isNetworkError)
             {
                 Debug.Log(request.error);
                 StartCoroutine(WaitAndTryConnectToServerAgain());
@@ -578,34 +599,39 @@ namespace LightShaft.Scripts
 
         public virtual void Start()
         {
-
+            //Temporary fix... 
+            //is360 = false;
             //Define render texture size
-            if (videoPlayer.targetTexture != null)
+            if (videoPlayer != null)
             {
-                switch (videoQuality)
+                if (videoPlayer.targetTexture != null)
                 {
-                    case YoutubeVideoQuality.STANDARD:
-                        videoPlayer.targetTexture.width = 640;
-                        videoPlayer.targetTexture.height = 360;
-                        break;
-                    case YoutubeVideoQuality.HD:
-                        videoPlayer.targetTexture.width = 1280;
-                        videoPlayer.targetTexture.height = 720;
-                        break;
-                    case YoutubeVideoQuality.FULLHD:
-                        videoPlayer.targetTexture.width = 1920;
-                        videoPlayer.targetTexture.height = 1080;
-                        break;
-                    case YoutubeVideoQuality.UHD1440:
-                        videoPlayer.targetTexture.width = 2560;
-                        videoPlayer.targetTexture.height = 1440;
-                        break;
-                    case YoutubeVideoQuality.UHD2160:
-                        videoPlayer.targetTexture.width = 3840;
-                        videoPlayer.targetTexture.height = 2160;
-                        break;
+                    switch (videoQuality)
+                    {
+                        case YoutubeVideoQuality.STANDARD:
+                            videoPlayer.targetTexture.width = 640;
+                            videoPlayer.targetTexture.height = 360;
+                            break;
+                        case YoutubeVideoQuality.HD:
+                            videoPlayer.targetTexture.width = 1280;
+                            videoPlayer.targetTexture.height = 720;
+                            break;
+                        case YoutubeVideoQuality.FULLHD:
+                            videoPlayer.targetTexture.width = 1920;
+                            videoPlayer.targetTexture.height = 1080;
+                            break;
+                        case YoutubeVideoQuality.UHD1440:
+                            videoPlayer.targetTexture.width = 2560;
+                            videoPlayer.targetTexture.height = 1440;
+                            break;
+                        case YoutubeVideoQuality.UHD2160:
+                            videoPlayer.targetTexture.width = 3840;
+                            videoPlayer.targetTexture.height = 2160;
+                            break;
+                    }
                 }
             }
+
 
             if (playUsingInternalDevicePlayer)
                 loadYoutubeUrlsOnly = true;
@@ -698,19 +724,36 @@ namespace LightShaft.Scripts
 
         void FixedUpdate()
         {
-            if (videoPlayer.isPlaying)
+            if (videoPlayer != null)
             {
-                if (!lowRes)
+                if (videoPlayer.isPlaying)
                 {
-                    if (videoPlayer.GetTargetAudioSource(0).volume <= 0)
-                        videoPlayer.GetTargetAudioSource(0).volume = _controller.volumeSlider.value;
-                }
-                else
-                {
-                    if (audioPlayer != null)
+                    if (!lowRes)
                     {
-                        if (audioPlayer.GetTargetAudioSource(0).volume <= 0)
-                            audioPlayer.GetTargetAudioSource(0).volume = _controller.volumeSlider.value;
+                        if (_controller.volumeSlider != null)
+                        {
+                            if (videoPlayer.GetTargetAudioSource(0).volume <= 0)
+                                videoPlayer.GetTargetAudioSource(0).volume = _controller.volumeSlider.value;
+                        }
+                        else
+                        {
+                            videoPlayer.GetTargetAudioSource(0).volume = 1;
+                        }
+                    }
+                    else
+                    {
+                        if (audioPlayer != null)
+                        {
+                            if (_controller.volumeSlider != null)
+                            {
+                                if (audioPlayer.GetTargetAudioSource(0).volume <= 0)
+                                    audioPlayer.GetTargetAudioSource(0).volume = _controller.volumeSlider.value;
+                            }
+                            else
+                            {
+                                audioPlayer.GetTargetAudioSource(0).volume = 1;
+                            }
+                        }
                     }
                 }
             }
@@ -857,8 +900,9 @@ namespace LightShaft.Scripts
             if (decryptedUrlForAudio)
             {
                 decryptedUrlForAudio = false;
-                DecryptAudioDone(decryptedAudioUrlResult);
-                decryptedUrlForVideo = true;
+                StartCoroutine(ExtractorGetNParamAudio(decryptedAudioUrlResult, decryptedVideoUrlResult));
+                //DecryptAudioDone(decryptedAudioUrlResult);
+                //decryptedUrlForVideo = true;
             }
 
             if (decryptedUrlForVideo)
@@ -1145,14 +1189,14 @@ namespace LightShaft.Scripts
 
         bool videoEnded = false;
         protected bool noAudioAtacched = false;
-        protected string videoTitle = "";
+        [HideInInspector]
+        public string videoTitle = "";
         public Material EACMaterial;
         public Material Material360;
 
         //The callback when the url's are loaded.
         private void UrlsLoaded()
         {
-
             gettingYoutubeURL = false;
             List<VideoInfo> videoInfos = youtubeVideoInfos;
 
@@ -1170,6 +1214,7 @@ namespace LightShaft.Scripts
             {
                 foreach (var info in videoInfos.Where(info => info.FormatCode == 18))
                 {
+                    //Debug.Log(info.RequiresDecryption);
                     if (info.RequiresDecryption)
                     {
                         //The string is the video url with audio
@@ -1181,7 +1226,7 @@ namespace LightShaft.Scripts
                         videoAreReadyToPlay = true;
                         OnYoutubeUrlsLoaded();
                     }
-                    videoTitle = info.Title;
+                    //videoTitle = info.Title;
                 }
             }
             else
@@ -1216,7 +1261,7 @@ namespace LightShaft.Scripts
                         _temporaryAudio = info.DownloadUrl;
                         audioUrl = info.DownloadUrl;
                     }
-                    videoTitle = info.Title;
+                    //videoTitle = info.Title;
                     break;
                 }
 
@@ -1252,7 +1297,7 @@ namespace LightShaft.Scripts
 
                     if (info.VideoType == t && info.Resolution == (quality))
                     {
-                        if(debug) Debug.Log(quality);
+                        if (debug) Debug.Log(quality);
                         /*formats for 360 videos
                         360 = 134(mp4) 243(webm)
                         720 = 136(mp4) 247(webm)
@@ -1362,7 +1407,7 @@ namespace LightShaft.Scripts
 
                             if (found360)
                             {
-                                if(debug) Debug.Log(info.FormatCode);
+                                if (debug) Debug.Log(info.FormatCode);
                                 if (info.RequiresDecryption)
                                 {
                                     if (debug)
@@ -1401,21 +1446,22 @@ namespace LightShaft.Scripts
                             {
                                 if (debug) Debug.Log(info.DownloadUrl);
                                 _temporaryVideo = info.DownloadUrl;
-                                
+
                                 if (decryptionNeeded)
                                 {
                                     decryptionNeeded = false;
+
                                     videoUrl = info.DownloadUrl;
-                                    videoAreReadyToPlay = true;
-                                    OnYoutubeUrlsLoaded();
+                                    //videoAreReadyToPlay = true;
+                                    //OnYoutubeUrlsLoaded();
+                                    StartCoroutine(GetNParamAudio(info.DownloadUrl, info.HtmlPlayerVersion));
                                 }
                                 else
                                 {
-                                    
                                     StartCoroutine(GetNParamAudio(info.DownloadUrl, info.HtmlPlayerVersion));
                                 }
-                                
-                                
+
+
                             }
                             foundVideo = true;
 
@@ -1525,7 +1571,7 @@ namespace LightShaft.Scripts
 
                     foreach (VideoInfo info in videoInfos)
                     {
-                        Debug.Log("RES: "+info.Resolution +" | "+info.FormatCode+" | "+info.VideoType);
+                        Debug.Log("RES: " + info.Resolution + " | " + info.FormatCode + " | " + info.VideoType);
 
                     }
 
@@ -1601,10 +1647,11 @@ namespace LightShaft.Scripts
                 if (needDecryption)
                 {
                     decryptionNeeded = true;
-                    RetryPlayYoutubeVideo();
-                    //DecryptDownloadUrl(_temporaryVideo, _temporaryAudio, _tempHtmlPlayerVersion, false);
+                    //RetryPlayYoutubeVideo();
+                    //eqowi9eqiowuehij
+                    DecryptDownloadUrl(_temporaryVideo, _temporaryAudio, _tempHtmlPlayerVersion, false);
                 }
-                    
+
             }
         }
 
@@ -1675,12 +1722,12 @@ namespace LightShaft.Scripts
             HideLoading();
 
             waitAudioSeek = true;
-            if (is360)
+            if (is360 || videoPlayer.targetTexture != null)
             {
                 videoPlayer.targetTexture.width = (int)videoPlayer.width;
                 videoPlayer.targetTexture.height = (int)videoPlayer.height;
             }
-           
+
 
             if (videoQuality != YoutubeVideoQuality.STANDARD)
             {
@@ -2385,6 +2432,51 @@ namespace LightShaft.Scripts
         private static bool jsDownloaded = false;
 
         private string testinguri = "";
+
+        void SaveToCache(string name, string js)
+        {
+            string path = Application.persistentDataPath + "/utubejs/";
+            //Create Directory if it does not exist
+            if (!Directory.Exists(Path.GetDirectoryName(path)))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(path));
+                Debug.Log("Creating now");
+            }
+            else
+            {
+                Debug.Log(path + " does exist");
+            }
+
+            try
+            {
+                File.WriteAllText(path + "/" + name + ".js", js);
+                Debug.Log("Saved Data to: " + path.Replace("/", "\\"));
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning("Failed To Save Data to: " + path.Replace("/", "\\"));
+                Debug.LogWarning("Error: " + e.Message);
+            }
+        }
+
+        string LoadFromCache(string name)
+        {
+            string path = Application.persistentDataPath + "/utubejs/" + name + ".js";
+            if (File.Exists(Path.GetDirectoryName(path)))
+            {
+                string js = File.ReadAllText(path);
+                if (js != null)
+                    return js;
+                else
+                    return null;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
         IEnumerator Downloader(string uri, bool audio, bool loadJsOnly)
         {
             if (loadJsOnly)
@@ -2398,13 +2490,27 @@ namespace LightShaft.Scripts
             }
             else
             {
+                if (debug)
+                    Debug.Log(jsDownloaded);
+
                 if (!jsDownloaded)
                 {
+                    //string cachedJs = LoadFromCache(currentJSName);
+                    //if(cachedJs != null)
+                    //{
+                    //    if(debug)
+                    //        Debug.Log("Loaded From cache");
+                    //    jsUrlDownloaded = cachedJs;
+                    //}
+                    //else
+                    //{
                     UnityWebRequest request = UnityWebRequest.Get(uri);
                     //request.SetRequestHeader("User-Agent", UserAgent);
                     yield return request.SendWebRequest();
                     //WriteLog("js", request.downloadHandler.text);
                     jsUrlDownloaded = request.downloadHandler.text;
+                    //SaveToCache(currentJSName, jsUrlDownloaded);
+                    //}
                     jsDownloaded = true;
                     ReadyForExtract(jsUrlDownloaded, audio);
                 }
@@ -2543,45 +2649,56 @@ namespace LightShaft.Scripts
 
         private void DoRegexFunctionsForVideo(string jsF)
         {
-            Debug.Log("jeqwihjeahskledas");
+            //Debug.Log("jeqwihjeahskledas");
             masterURLForVideo = jsF;
             string js = jsF;
+
             //Find "C" in this: var A = B.sig||C (B.s)
             //string functNamePattern = @"(\w+)\s*=\s*function\(\s*(\w+)\s*\)\s*{\s*\2\s*=\s*\2\.split\(\""\""\)\s*;(.+)return\s*\2\.join\(\""\""\)\s*}\s*;";
-            string functNamePattern = @"(\w+)=function\(\w+\){(\w+)=\2\.split\(\x22{2}\);.*?return\s+\2\.join\(\x22{2}\)}";
+
+            //string functNamePattern = @"\b[cs]\s*&&\s*[adf]\.set\([^,]+\s*,\s*encodeURIComponent\s*\(\s*([\w$]+)\(";
+            //string functNamePattern = patternNames[patternIndex];
+            patternNames = magicResult.defaultFuncName;
             var funcName = "";
-
-            //WriteLog("njs", js);
-
-            funcName = Regex.Match(js, functNamePattern).Groups[1].Value; ;//@magicResult.defaultFuncName;
-
-            //foreach (string pat in patternNames)
-            //{
-            //    string h = Regex.Match(js, pat).Groups[1].Value;
-            //    if (!string.IsNullOrEmpty(h))
-            //    {
-            //        funcName = h;
-            //        break;
-            //    }
-            //}
+            foreach (string pat in patternNames)
+            {
+                string r = Regex.Match(js, pat).Groups[1].Value;
+                if (!string.IsNullOrEmpty(r))
+                {
+                    funcName = r;
+                    break;
+                }
+            }
 
             if (funcName.Contains("$"))
             {
                 funcName = "\\" + funcName; //Due To Dollar Sign Introduction, Need To Escape
             }
 
+            // string nCodeFn = "&&\\(b=a.get\\(\"n\"\\)\\)&&\\(b=(.+)\\(b\\)";
+            // Debug.Log(nCodeFn);
+            // string nFuncName = Regex.Match(js, nCodeFn).Groups[1].Value;
+            // string nFunctionStart = nFuncName+"=function(a)";
+            // Debug.Log(nFunctionStart);
+            // int ndx = js.IndexOf(nFunctionStart);
+            // string nSubBody = js.Substring(ndx+nFunctionStart.Length);
+            // Debug.Log(nSubBody);
 
-            string funcPattern = @"(?!h\.)" + @funcName + @"=function\(\w+\)\{(.*?)\}"; //Escape funcName string
-            var funcBody = Regex.Match(js, funcPattern, RegexOptions.Singleline).Value; //Entire sig function
+            //string fb = "var "+nFunctionStart + utils.cutAfterJSON(nSubBody);
+            string funcPattern = @"(?!h\.)" + @funcName + @"=function\(\w+\)\{.*?join.*\};"; //Escape funcName string
 
+            var funcBody = Regex.Match(js, funcPattern).Value; //Entire sig function old entire function....
+
+            //Debug.Log(funcBody);
             var lines = funcBody.Split(';'); //Each line in sig function
+
             string idReverse = "", idSlice = "", idCharSwap = ""; //Hold name for each cipher method
             string functionIdentifier = "";
             string operations = "";
 
             foreach (var line in lines.Skip(1).Take(lines.Length - 2)) //Matches the funcBody with each cipher method. Only runs till all three are defined.
             {
-                Debug.Log(line);
+                //Debug.Log(line);
                 if (!string.IsNullOrEmpty(idReverse) && !string.IsNullOrEmpty(idSlice) &&
                     !string.IsNullOrEmpty(idCharSwap))
                 {
@@ -2621,13 +2738,13 @@ namespace LightShaft.Scripts
                 if (Regex.Match(js, reSlice).Success)
                 {
                     if (idSlice == "")
-                    idSlice = functionIdentifier; //If def matched the regex for slice then the current function is defined as the slice.
+                        idSlice = functionIdentifier; //If def matched the regex for slice then the current function is defined as the slice.
                 }
 
                 if (Regex.Match(js, reSwap).Success)
                 {
                     if (idCharSwap == "")
-                    idCharSwap = functionIdentifier; //If def matched the regex for charSwap then the current function is defined as swap.
+                        idCharSwap = functionIdentifier; //If def matched the regex for charSwap then the current function is defined as swap.
                 }
 
             }
@@ -2723,14 +2840,14 @@ namespace LightShaft.Scripts
             {
 
                 string magicResult = MagicHands.DecipherWithOperations(encryptedSignatureVideo, operations);
-                Debug.Log(SignatureQuery);
-                Debug.Log(magicResult);
+                //Debug.Log(SignatureQuery);
+                //Debug.Log(magicResult);
                 decryptedVideoUrlResult = HTTPHelperYoutube.ReplaceQueryStringParameter(EncryptUrlForVideo, SignatureQuery, magicResult, lsigForVideo);
                 //var url = new Uri(decryptedVideoUrlResult);
                 //decryptedVideoUrlResult = decryptedVideoUrlResult.Replace(url.Host, "redirector.googlevideo.com");
             }
 
-            Debug.Log("DECRY: "+decryptedVideoUrlResult);
+            //Debug.Log("DECRY: "+decryptedVideoUrlResult);
             decryptedUrlForVideo = true;
         }
 
@@ -2971,12 +3088,14 @@ namespace LightShaft.Scripts
             {
                 throw new ArgumentException("URL is not a valid youtube URL!");
             }
+
             StartCoroutine(DownloadYoutubeUrl(videoUrl, callback, player));
 
         }
 
         private string htmlVersion = "";
         private bool olderVersionEnable = false;
+        private string currentJSName = "";
         IEnumerator YoutubeURLDownloadFinished(Action callback, YoutubeSettings player)
         {
             var videoId = youtubeUrl.Replace("https://youtube.com/watch?v=", "");
@@ -3060,7 +3179,7 @@ namespace LightShaft.Scripts
                 {
                     //var dataRegex = new Regex(@"""jsUrl""\s*:\s*""([^""]+)""");
                     // var dataRegex = new Regex("\"(?:PLAYER_JS_URL|jsUrl)\"\\s*:\\s*\"([^\"]+)\"");
-                    
+
                     var regexs = new List<Regex>() {
                         new Regex(@"\/s\/player\/([a-zA-Z0-9_-]{8,})\/player"),
                     };
@@ -3072,21 +3191,20 @@ namespace LightShaft.Scripts
                             js = regex.Match(jsonForHtmlVersion).Result("$1").Replace("\\/", "/");
                             break;
                         }
-                            
+
                     }
                     //string js = dataRegex.Match(jsonForHtmlVersion).Result("$1").Replace("\\/", "/");
                     //https://www.youtube.com/s/player/4248d311/player_ias.vflset/en_US/base.js
                     if (js.Contains("player-plasma-ias-phone-en_US.vflset/base.js"))
                     {
-                       js = js.Replace("player-plasma-ias-phone-en_US.vflset/base.js", "player_ias.vflset/en_US/base.js");
+                        js = js.Replace("player-plasma-ias-phone-en_US.vflset/base.js", "player_ias.vflset/en_US/base.js");
                     }
+                    currentJSName = js;
+                    jsUrl = "https://www.youtube.com/s/player/" + js + "/player_ias.vflset/en_US/base.js";
 
-                    jsUrl = "https://www.youtube.com/s/player/"+js+"/player_ias.vflset/en_US/base.js";
-                    if(debug) Debug.Log(jsUrl);
+                    if (debug) Debug.Log(jsUrl);
                     testinguri = jsUrl;
-
                     //player-plasma-ias-phone-en_US.vflset/base.js vs player_ias.vflset/en_US/base.js
-
                     if (olderVersionEnable) //This is an olderr version recommend not execute.
                     {
                         StartCoroutine(Downloader(jsUrl, false, true));
@@ -3147,7 +3265,7 @@ namespace LightShaft.Scripts
                             //info.HtmlPlayerVersion = htmlPlayerVersion;
 
                         }
-                        if(debug)
+                        if (debug)
                             Debug.Log("I have the js uri");
                         //StartCoroutine(YoutubeGenerateUrlUsingClient(videoUrl, GetFormatCode()));
                         callback.Invoke();
@@ -3219,6 +3337,8 @@ namespace LightShaft.Scripts
             List<string> urls = new List<string>();
             List<string> ciphers = new List<string>();
             JObject newJson = json;
+
+
             //WriteLog("test", newJson.ToString());
             if (newJson["streamingData"]["formats"][0]["cipher"] != null)
             {
@@ -3298,13 +3418,12 @@ namespace LightShaft.Scripts
 
                     url += fallbackHost;
                 }
-
                 else
                 {
                     url = queries["url"];
                 }
 
-                url = HTTPHelperYoutube.UrlDecode(url);
+
                 url = HTTPHelperYoutube.UrlDecode(url);
 
                 IDictionary<string, string> parameters = HTTPHelperYoutube.ParseQueryString(url);
@@ -3688,6 +3807,8 @@ namespace LightShaft.Scripts
 
         IEnumerator WaitJSDownload(VideoInfo videoInfo, string js)
         {
+            if (debug)
+                Debug.Log("waiting js");
             yield return new WaitUntil(CheckIfJSIsDownloaded);
             //StartCoroutine(GetNParam( videoInfo));
             //DecryptDownloadUrlNParam(videoInfo, js);
@@ -3698,25 +3819,33 @@ namespace LightShaft.Scripts
 
         void GetNewSystem()
         {
-            if(is360)
+            if (is360)
+            {
                 StartCoroutine(DownloadYoutubeUrl(tmpv, GetTheJS, this));
+            }
+
             else
             {
                 decryptionNeeded = true;
-                StartCoroutine(YoutubeGenerateUrlUsingClient(tmpv, GetFormatCode()));
+                if (!BACKUPSYSTEM)
+                    StartCoroutine(YoutubeGenerateUrlUsingClient(tmpv, GetFormatCode()));
+                else
+                    GetDownloadUrls(UrlsLoaded, youtubeUrl, this);
+
             }
-                
+
         }
 
         public void GetTheJS()
         {
-            if(debug)
+            if (debug)
                 Debug.Log("GOT THE JSURL");
             StartCoroutine(YoutubeGenerateUrlUsingClient(tmpv, tmpf));
         }
 
         IEnumerator GetNParamAudio(string dUrl, string htmlpv)
         {
+            if (debug) Debug.Log("Descamble N :" + testinguri);
             IDictionary<string, string> strs = HTTPHelperYoutube.ParseQueryString(audioUrl);
             if (strs.ContainsKey(NQuery))
             {
@@ -3732,16 +3861,66 @@ namespace LightShaft.Scripts
                 audioUrl = audioUrl.Replace("googlevideo.com:443", "googlevideo.com");
                 StartCoroutine(GetNParam(dUrl, htmlpv));
             }
+            else
+            {
+                if (debug) Debug.Log("Dont have N");
+                OnYoutubeUrlsLoaded();
+            }
         }
 
-        IEnumerator GetNParam( string dUrl, string htmlpv)
+        IEnumerator GetNParam(string dUrl, string htmlpv)
         {
             IDictionary<string, string> strs = HTTPHelperYoutube.ParseQueryString(dUrl);
             string nitem = strs[NQuery];
             UnityWebRequest request;
             //Debug.Log("Old n: "+nitem);
-            request = UnityWebRequest.Get("https://yt-dlp-online-utils.vercel.app/youtube/nparams/decrypt?player="+testinguri+"&n="+ nitem);
-            
+            request = UnityWebRequest.Get("https://yt-dlp-online-utils.vercel.app/youtube/nparams/decrypt?player=" + testinguri + "&n=" + nitem);
+
+
+            yield return request.SendWebRequest();
+            var requestedData = JSON.Parse(request.downloadHandler.text);
+            //Debug.Log(request.downloadHandler.text);
+            string correctN = requestedData["data"];
+            //Debug.Log("New n: " + correctN);
+            dUrl = HTTPHelperYoutube.ReplaceQueryStringParameterx(dUrl, NQuery, correctN);
+            //Debug.Log("added right N");
+            //_temporaryVideo = videoInfo.DownloadUrl;
+            videoUrl = dUrl;
+            videoUrl = videoUrl.Replace("googlevideo.com:443", "googlevideo.com");
+            videoUrl = videoUrl.Replace("&ratebypass=yes", "");
+            videoAreReadyToPlay = true;
+            //Debug.Log(videoUrl);
+
+            OnYoutubeUrlsLoaded();
+        }
+
+        IEnumerator ExtractorGetNParamAudio(string dAUrl, string dUrl)
+        {
+            IDictionary<string, string> strs = HTTPHelperYoutube.ParseQueryString(dAUrl);
+            if (strs.ContainsKey(NQuery))
+            {
+                string nitem = strs[NQuery];
+                UnityWebRequest request;
+                request = UnityWebRequest.Get("https://yt-dlp-online-utils.vercel.app/youtube/nparams/decrypt?player=" + testinguri + "&n=" + nitem);
+                yield return request.SendWebRequest();
+                var requestedData = JSON.Parse(request.downloadHandler.text);
+                string correctN = requestedData["data"];
+                string ur = HTTPHelperYoutube.ReplaceQueryStringParameterx(dAUrl, NQuery, correctN);
+                //_temporaryVideo = videoInfo.DownloadUrl;
+                audioUrl = ur;
+                audioUrl = audioUrl.Replace("googlevideo.com:443", "googlevideo.com");
+                StartCoroutine(ExtractorGetNParam(dUrl));
+            }
+        }
+
+        IEnumerator ExtractorGetNParam(string dUrl)
+        {
+            IDictionary<string, string> strs = HTTPHelperYoutube.ParseQueryString(dUrl);
+            string nitem = strs[NQuery];
+            UnityWebRequest request;
+            //Debug.Log("Old n: "+nitem);
+            request = UnityWebRequest.Get("https://yt-dlp-online-utils.vercel.app/youtube/nparams/decrypt?player=" + testinguri + "&n=" + nitem);
+
 
             yield return request.SendWebRequest();
             var requestedData = JSON.Parse(request.downloadHandler.text);

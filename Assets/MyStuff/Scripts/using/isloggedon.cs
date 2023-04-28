@@ -25,7 +25,7 @@ public class isloggedon : MonoBehaviour
         }
         else
         { 
-        notregistered.text = "You aren't registered/logged on. Please register to continue";
+        notregistered.text = "Please register/logon to continue";
             Register.SetActive(true);
             Logon.SetActive(true);
             Masterchange.SetActive(false);

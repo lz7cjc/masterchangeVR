@@ -12,12 +12,17 @@ public class switchText : MonoBehaviour
     public float counter = 0;
     private floorceilingmove floorceilingmove;
     private bool tempStop;
+    public GameObject steps;
+    public GameObject home;
+    public GameObject location; 
 
     // Start is called before the first frame update
     public void Start() 
     {
-        instructText.text  = "How to Navigate MasterChange \n You should see a green dot in the centre of your vision. As you look around, it will sometimes change to a circle. If that happens if means you can choose what you are looking at. Keep looking in the same place for 3 seconds to make your choice \n (HINT: you need to be quite close to an object to choose it) \n \n This sign is active but you need to get closer to it.To walk, look at any green or wooden floor, for three seconds. To stop look at the floor again \n When you get close enough you will be able to select it";
-        instructText.color = Color.white;
+        instructText.text  = "How to Navigate MasterChange \n \u2022 Choose things using the green dot in the centre of your vision \n \u2022 Anything selectable will result in it turning to a green circle \n \u2022 It will only change to circle if you are quite close \n \u2022 Look at the object for 3 seconds to choose it(you need to keep steady) \n This sign is active so try it now \n \u2022 Above you is a heads up display(HUD) \n \u2022 The feet icon allows you to walk \n \u2022 Look at it for 3 seconds and move towards this sign";
+        home.SetActive(false);
+        steps.SetActive(true);
+        location.SetActive(false);
     }
     void Update()
 
@@ -31,8 +36,11 @@ public class switchText : MonoBehaviour
 
                 mousehover = false;
                 counter = 0;
-                instructText.color = Color.green;
-                instructText.text = "Congratulations \n Now you can choose what to do in MasterChange \n\n Check out posters, signs and TVs as well as buttons to to explore our world";
+                instructText.text = "Congratulations \n Now you can choose what to do in MasterChange \n\n Check out posters, signs and TVs as well as the three buttons in the heads up display (HUD) above you, to to explore our world \n \n The HUD: The home icon will bring you back here, and the middle icon will open up a menu of all the main zones in MasterChange, so you can teleport directly to them";
+                home.SetActive(true);
+                steps.SetActive(false);
+                location.SetActive(true);
+
             }
         }
     }
