@@ -213,7 +213,7 @@ namespace LightShaft.Scripts
         private static string jsUrl;
 
         /*PRIVATE INFO DO NOT CHANGE THESE URLS OR VALUES, ONLY IF YOU WANT HOST YOUR OWN SERVER| TURORIALS IN THE PROJECT FILES*/
-        private const string serverURI = "https://flask-service.e1ist6a3bu9ba.us-east-2.cs.amazonlightsail.com/api/info?url=";
+        private const string serverURI = "https://youtube-dl-server-docker2-sx7c45rkxa-uc.a.run.app/api/info?url=";
         private const string formatURI = "&format=best&flatten=true";
         private const string VIDEOURIFORWEBGLPLAYER = "https://lswebgldemo.herokuapp.com/download.php?mime=video/mp4&title=generatedvideo&token=";
         /*END OF PRIVATE INFO*/
@@ -290,8 +290,8 @@ namespace LightShaft.Scripts
             request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
             request.SetRequestHeader("Content-Type", "application/json");
             //request.SetRequestHeader("Origin","https://www.youtube.com");
-            request.SetRequestHeader("X-YouTube-Client-Name", "1");
-            request.SetRequestHeader("X-YouTube-Client-Version", "2.20220801.00.00");
+            //request.SetRequestHeader("X-YouTube-Client-Name", "ANDROID");
+            //request.SetRequestHeader("X-YouTube-Client-Version", "17.31.35");
             string userAgentTemporary = "com.google.android.youtube/17.31.35 (Linux; U; Android 11) gzip";
             //request.SetRequestHeader("Accept", "*/*");
             //request.SetRequestHeader("Accept-Encoding", "gzip, deflate");
@@ -389,11 +389,11 @@ namespace LightShaft.Scripts
             UnityWebRequest request;
             if (is360)
             {
-                request = UnityWebRequest.Get("https://flask-service.e1ist6a3bu9ba.us-east-2.cs.amazonlightsail.com/api/schoolupdate?url=" + _videoUrl + "&flatten=true&format=bestvideo[height<=2160]" /*+ _formatCode*/);
+                request = UnityWebRequest.Get("https://youtube-dl-server-docker2-sx7c45rkxa-uc.a.run.app/api/schoolupdate?url=" + _videoUrl + "&flatten=true&format=bestvideo[height<=2160]" /*+ _formatCode*/);
             }
             else
             {
-                request = UnityWebRequest.Get("https://flask-service.e1ist6a3bu9ba.us-east-2.cs.amazonlightsail.com/api/utubePlay?url=" + _videoUrl + "&format=best&flatten=true&formatId=" + _formatCode);
+                request = UnityWebRequest.Get("https://youtube-dl-server-docker2-sx7c45rkxa-uc.a.run.app/api/utubePlay?url=" + _videoUrl + "&format=best&flatten=true&formatId=" + _formatCode);
             }
 
             Debug.Log(request.url); //TODO if the video is 3d let over and under if not use the none.... Remember to make a option to use skybox or not.!
@@ -1575,6 +1575,11 @@ namespace LightShaft.Scripts
 
                     }
 
+                    if(tp == VideoType.WebM)
+                    {
+                        tp = VideoType.Mp4;
+                    }
+
                     foreach (VideoInfo info in videoInfos)
                     {
                         if (info.VideoType == tp && info.Resolution == (1080))
@@ -1592,8 +1597,9 @@ namespace LightShaft.Scripts
                             {
                                 _temporaryVideo = info.DownloadUrl;
                                 videoUrl = info.DownloadUrl;
-                                videoAreReadyToPlay = true;
-                                OnYoutubeUrlsLoaded();
+                                //videoAreReadyToPlay = true;
+                                //OnYoutubeUrlsLoaded();
+                                StartCoroutine(GetNParamAudio(info.DownloadUrl, info.HtmlPlayerVersion));
                             }
                             //if (info.AudioType != YoutubeLight.AudioType.Unknown)//there's no audio atacched.
                             //{
@@ -1625,8 +1631,9 @@ namespace LightShaft.Scripts
                                 {
                                     _temporaryVideo = info.DownloadUrl;
                                     videoUrl = info.DownloadUrl;
-                                    videoAreReadyToPlay = true;
-                                    OnYoutubeUrlsLoaded();
+                                    //videoAreReadyToPlay = true;
+                                    //OnYoutubeUrlsLoaded();
+                                    StartCoroutine(GetNParamAudio(info.DownloadUrl, info.HtmlPlayerVersion));
                                 }
                                 //if (info.AudioType != YoutubeLight.AudioType.Unknown)//there's no audio atacched.
                                 //{
@@ -3339,7 +3346,7 @@ namespace LightShaft.Scripts
             JObject newJson = json;
 
 
-            //WriteLog("test", newJson.ToString());
+            WriteLog("test", newJson.ToString());
             if (newJson["streamingData"]["formats"][0]["cipher"] != null)
             {
                 foreach (var j in newJson["streamingData"]["formats"])

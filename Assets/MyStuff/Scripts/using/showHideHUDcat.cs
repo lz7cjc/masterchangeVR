@@ -17,8 +17,9 @@ public class showHideHUDcat : MonoBehaviour
     public bool mousehover = false;
    // public GameObject altImage;
     public float Counter = 0;
-   // public bool turnoff;
-   public GameObject zones;
+    // public bool turnoff;
+    public GameObject zones;
+    public GameObject hudMove;
     //  public GameObject hud;
     private bool turnon = true;
 
@@ -45,7 +46,7 @@ public class showHideHUDcat : MonoBehaviour
         //    hud.SetActive(false);
 
         //}
-        Debug.Log("12345" + turnon);
+    //    Debug.Log("12345" + turnon);
         if (mousehover)
         {
 
@@ -60,6 +61,7 @@ public class showHideHUDcat : MonoBehaviour
                 {
                     Debug.Log("12345 update");
                     zones.SetActive(true);
+                    hudMove.SetActive(false);
                     turnon = false;
 
                 }

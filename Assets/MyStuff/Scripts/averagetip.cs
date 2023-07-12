@@ -35,7 +35,7 @@ public class averagetip : MonoBehaviour
         yield return www.SendWebRequest();
         if (www.isNetworkError || www.isHttpError)
         {
-            Debug.Log(www.error);
+         //   Debug.Log(www.error);
             //errorMessage.text = "We hit a problem: (" + www.error + "). Please skip this screen until we have fixed it";
 
         }

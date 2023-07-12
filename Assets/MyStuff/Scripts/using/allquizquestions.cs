@@ -64,13 +64,13 @@ public class allquizquestions : MonoBehaviour
     // Update is called once per frame
     public void CallRegisterCoroutine()
     {
-         Debug.Log("in the call register coroutine");
+     //    Debug.Log("in the call register coroutine");
             StartCoroutine(GetQuestions());
       
     }
     IEnumerator GetQuestions()
     {
-        Debug.Log("in the IEnumerator");
+       // Debug.Log("in the IEnumerator");
 
         WWWForm form = new WWWForm();
      //   form.AddField("contenttype", contenttype);
@@ -82,22 +82,22 @@ public class allquizquestions : MonoBehaviour
         yield return www.SendWebRequest();
         if (www.isNetworkError || www.isHttpError)
         {
-            Debug.Log(www.error);
+       //     Debug.Log(www.error);
             //errorMessage = www.error;
         }
         else
         {
             string json = www.downloadHandler.text;
-            Debug.Log("questions returned" + json);
+          //  Debug.Log("questions returned" + json);
 
 
 
             AllQuestionsJSON loadQuestions = JsonUtility.FromJson<AllQuestionsJSON>(json);
             int n = loadQuestions.data.Count;
-            Debug.Log("the rcord count ;;; " + n);
+          //  Debug.Log("the rcord count ;;; " + n);
             if (n == 0)
             {
-                Debug.Log("answered all the question ;;;;");
+            //    Debug.Log("answered all the question ;;;;");
                 questionSection.SetActive(false);
                 NoQuestionsSection.SetActive(true);
 
@@ -108,13 +108,13 @@ public class allquizquestions : MonoBehaviour
 
                 System.Random random = new System.Random();
                 int i = random.Next(n);
-                Debug.Log("questions" + loadQuestions.data[i].question + "\n");
-                Debug.Log("quiz_id ids" + loadQuestions.data[i].quiz_id + "\n");
-                Debug.Log("prize" + loadQuestions.data[i].prize.ToString());
-                Debug.Log("Behaviour_Description" + loadQuestions.data[i].Behaviour_Type);
+              //  Debug.Log("questions" + loadQuestions.data[i].question + "\n");
+           //     Debug.Log("quiz_id ids" + loadQuestions.data[i].quiz_id + "\n");
+            //    Debug.Log("prize" + loadQuestions.data[i].prize.ToString());
+            //    Debug.Log("Behaviour_Description" + loadQuestions.data[i].Behaviour_Type);
 
 
-                Debug.Log("random number: " + i);
+            //    Debug.Log("random number: " + i);
                 question.text = loadQuestions.data[i].question;
                 reviewQuestion.text = loadQuestions.data[i].question;
                 repeatQuestion.text = loadQuestions.data[i].question;

@@ -21,8 +21,15 @@ public class MoveCamera : MonoBehaviour
     public string nextscene;
     public GameObject section;
     private bool tempStop;
-  //  private bool tempStart;
+   // private showHideHUD showHideHUD;
 
+    //  private bool tempStart;
+
+    private void Start()
+    {
+
+
+    }
     void Update()
     {
 
@@ -50,6 +57,7 @@ public class MoveCamera : MonoBehaviour
         startStopMove(tempStop = true);
         TMP_title.color = Color.white;
         mousehover = true;
+       
     }
 
     // mouse Exit Event
@@ -65,6 +73,7 @@ public class MoveCamera : MonoBehaviour
 
     private void showandhide()
     {
+        Debug.Log("picked it up 2");
         player.useGravity = gravity;
         player.transform.position = cameratarget.transform.position;
         player.transform.SetParent(cameratarget.transform);
@@ -82,6 +91,8 @@ public class MoveCamera : MonoBehaviour
         {
             floorceilingmove = FindObjectOfType<floorceilingmove>();
             floorceilingmove.stopTheCamera();
+        //    showHideHUD = FindObjectOfType<showHideHUD>();
+       //     showHideHUD.Start();
 
         }
 

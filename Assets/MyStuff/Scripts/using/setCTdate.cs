@@ -36,13 +36,13 @@ public class setCTdate : MonoBehaviour
     {
      if (!PlayerPrefs.HasKey("CTstartpoint"))
             {
-            Debug.Log("xxx in set reference no ctstartpoint key");
+      //      Debug.Log("xxx in set reference no ctstartpoint key");
                 apptDate = DateTime.Now.AddMinutes(300);
                
 
                 PlayerPrefs.SetString("CTstartpoint", apptDate.ToBinary().ToString());
             }
-        Debug.Log("xxx in set reference no ctstartpoint key");
+      //  Debug.Log("xxx in set reference no ctstartpoint key");
 
         setScene();
     }    
@@ -53,15 +53,15 @@ public class setCTdate : MonoBehaviour
 
         //Store the current time when it starts
         currentDate = System.DateTime.Now;
-        Debug.Log("22222 in setScene function");
+        //Debug.Log("22222 in setScene function");
         //  currentDate2 = currentDate.AddDays(3);
-        Debug.Log("PlayerPrefs.GetString(VideoUrl) " + PlayerPrefs.GetString("VideoUrl"));
+     //   Debug.Log("PlayerPrefs.GetString(VideoUrl) " + PlayerPrefs.GetString("VideoUrl"));
 
         //did they get the good or bad video? If good then can ask to see bad
 
         if (PlayerPrefs.GetString("VideoUrl") == "https://youtu.be/1QSS32UG5p8")
         {
-            Debug.Log("PlayerPrefs.GetString(VideoUrl2) " + PlayerPrefs.GetString("VideoUrl"));
+     //       Debug.Log("PlayerPrefs.GetString(VideoUrl2) " + PlayerPrefs.GetString("VideoUrl"));
 
             displayCountdown.text = "You must be very relieved. What a happy result. Feel free to explore MasterChange, there is plenty else to discover. If you want to see how it may have turned out, with a little less luck, choose to 'See a different path'";
             PlayerPrefs.DeleteKey("VideoUrl");
@@ -76,18 +76,18 @@ public class setCTdate : MonoBehaviour
             {
                 //get the value from PlayerPrefs - it is a long string of numbers
                 long setInitialDate = Convert.ToInt64(PlayerPrefs.GetString("CTstartpoint"));
-                     Debug.Log("setInitialDate" + setInitialDate);
+          //           Debug.Log("setInitialDate" + setInitialDate);
                 //long temp = Convert.ToInt64(PlayerPrefs.GetString("sysString"));
 
                 //Convert the old time from binary to a DataTime variable
                 DateTime displaystart = DateTime.FromBinary(setInitialDate);
-                  print("displaystart " + displaystart);
+          //        print("displaystart " + displaystart);
 
                 //calculate the number of days left until can unlock - saved date in PP vs current date
                 TimeSpan timeleft = displaystart.Subtract(currentDate);
                 int delaynotification = (int)timeleft.TotalMinutes;
                 PlayerPrefs.SetInt("delaynotification", delaynotification);
-                Debug.Log("timeleft" + timeleft.TotalMinutes);
+         //       Debug.Log("timeleft" + timeleft.TotalMinutes);
                 double timeformaths = timeleft.TotalDays;
                 //  string format = @"dd\hh";
 
@@ -120,7 +120,7 @@ public class setCTdate : MonoBehaviour
                 {
                     displayCountdown.text = "The nurse is ready for you now. Please remove all metal objects and tell the nurse of any concerns before we start";
                       NotifSend.SetActive(false);
-                    Debug.Log("am i in ");
+           //         Debug.Log("am i in ");
                     TPtoFilm.SetActive(true);
              
                 }

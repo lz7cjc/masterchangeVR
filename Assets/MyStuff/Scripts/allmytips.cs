@@ -55,13 +55,13 @@ public class allmytips : MonoBehaviour
     // Update is called once per frame
     public void CallRegisterCoroutine()
     {
-         Debug.Log("in the call register coroutine");
+       //  Debug.Log("in the call register coroutine");
             StartCoroutine(GetUserTips());
       
     }
     IEnumerator GetUserTips()
     {
-        Debug.Log("in the IEnumerator");
+      //  Debug.Log("in the IEnumerator");
 
         WWWForm form = new WWWForm();
         form.AddField("contenttype", contenttype);
@@ -81,13 +81,13 @@ public class allmytips : MonoBehaviour
         yield return www.SendWebRequest();
         if (www.isNetworkError || www.isHttpError)
         {
-            Debug.Log(www.error);
+        //    Debug.Log(www.error);
              //errorMessage = www.error;
         }
         else
         {
             string json = www.downloadHandler.text;
-             Debug.Log("first jspm frpm dpwm;apd" + json);
+          //   Debug.Log("first jspm frpm dpwm;apd" + json);
             if (json == "0 results" && title)
             {
                 ContentBody.text = "We only offer you content relevant to you. To get more tips tell us more about yourself (and earn riros at the same time)";
@@ -103,7 +103,7 @@ public class allmytips : MonoBehaviour
             {
                 PlayerTipsJSON loadedPlayerData = JsonUtility.FromJson<PlayerTipsJSON>(json);
 
-                Debug.Log("check abc" + loadedPlayerData.data[0].ContentBody + "\n");
+          //      Debug.Log("check abc" + loadedPlayerData.data[0].ContentBody + "\n");
                  
                 ContentTitle.text = loadedPlayerData.data[0].ContentBody;
                 ContentBody.text = loadedPlayerData.data[0].ContentBody;
@@ -112,7 +112,7 @@ public class allmytips : MonoBehaviour
             else if (!title)
             {
                 PlayerTipsJSON loadedPlayerData = JsonUtility.FromJson<PlayerTipsJSON>(json);
-                Debug.Log("check abcn" + loadedPlayerData.data[0].ContentBody + "\n");
+          //      Debug.Log("check abcn" + loadedPlayerData.data[0].ContentBody + "\n");
                 //    Debug.Log(loadedPlayerData.data[0].ContentBody + "\n");
                 ContentBody.text = loadedPlayerData.data[0].ContentBody;
             }

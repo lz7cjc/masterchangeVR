@@ -29,7 +29,7 @@ public class ToggleShowHideVideo : MonoBehaviour
     {
 
         riroAmount = PlayerPrefs.GetInt("rirosBalance");
-        Debug.Log("riro balance" + riroAmount);
+     //   Debug.Log("riro balance" + riroAmount);
     }
             
 
@@ -63,7 +63,7 @@ public class ToggleShowHideVideo : MonoBehaviour
                     PlayerPrefs.DeleteKey("stopFilm");
             //        Debug.Log("eeeee");
                     PlayerPrefs.SetString("VideoUrl", VideoUrlLink);
-                    print("---->>>" + PlayerPrefs.GetString("VideoUrl"));
+           //         print("---->>>" + PlayerPrefs.GetString("VideoUrl"));
                                   
               //      player.useGravity = false;
                 }

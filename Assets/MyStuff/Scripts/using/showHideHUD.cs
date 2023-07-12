@@ -11,9 +11,22 @@ public class showHideHUD : MonoBehaviour
     public bool mousehover = false;
 
     public float Counter = 0;
-    public bool turnoff;
-   public GameObject section;
-    public GameObject hud;
+    public bool showing = false;
+   public GameObject hudprimary;
+    public GameObject turnHudOn;
+    public GameObject turnHudOff;
+    public GameObject hudZones;
+    public GameObject hudMove;
+
+    public void Start()
+    {
+        hudprimary.SetActive(false);
+        hudZones.SetActive(false);
+        hudMove.SetActive(false);
+        turnHudOn.SetActive(true);
+        turnHudOff.SetActive(false);
+    }
+    
 
     void Update()
     {
@@ -33,16 +46,27 @@ public class showHideHUD : MonoBehaviour
             {
                 mousehover = false;
                 Counter = 0;
-                if (!turnoff)
+                if (!showing)
                 {
-                    section.SetActive(true);
-
+             
+                    Debug.Log("show + primary only");
+                    hudprimary.SetActive(true);
+                    turnHudOff.SetActive(true);
+                    turnHudOn.SetActive(false);
+                    showing = true;
                 }
                 else
                 {
-                    section.SetActive(false);
+                    //hide primary hud and change to a +
+                 
+                    hudprimary.SetActive(false);
+                    turnHudOff.SetActive(false);
+                    turnHudOn.SetActive(true);
+                    hudZones.SetActive(false);
+                    hudMove.SetActive(false);
 
 
+                    showing = false;
                 }
             }
         }

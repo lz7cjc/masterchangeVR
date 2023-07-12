@@ -54,13 +54,13 @@ public class allmytipsnotitle : MonoBehaviour
     // Update is called once per frame
     public void CallRegisterCoroutine()
     {
-         Debug.Log("in the call register coroutine");
+    //     Debug.Log("in the call register coroutine");
             StartCoroutine(GetUserTips());
       
     }
     IEnumerator GetUserTips()
     {
-        Debug.Log("in the IEnumerator");
+    //    Debug.Log("in the IEnumerator");
 
         WWWForm form = new WWWForm();
         form.AddField("contenttype", contenttype);
@@ -72,13 +72,13 @@ public class allmytipsnotitle : MonoBehaviour
         yield return www.SendWebRequest();
         if (www.isNetworkError || www.isHttpError)
         {
-            Debug.Log(www.error);
+         //   Debug.Log(www.error);
             ContentBody.text  = www.error;
         }
         else
         {
             string json = www.downloadHandler.text;
-             Debug.Log("first jspm frpm dpwm;apd" + json);
+      //       Debug.Log("first jspm frpm dpwm;apd" + json);
       
             if (json == "0 results")
                 //&& !title)
@@ -89,7 +89,7 @@ public class allmytipsnotitle : MonoBehaviour
             { 
      
                 PlayerTipsJSON loadedPlayerData = JsonUtility.FromJson<PlayerTipsJSON>(json);
-                Debug.Log("check abcn" + loadedPlayerData.data[0].ContentBody + "\n");
+        //        Debug.Log("check abcn" + loadedPlayerData.data[0].ContentBody + "\n");
                 //    Debug.Log(loadedPlayerData.data[0].ContentBody + "\n");
                 ContentBody.text = loadedPlayerData.data[0].ContentBody;
             }

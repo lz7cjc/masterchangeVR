@@ -92,11 +92,12 @@ public class showhide3d : MonoBehaviour
     Vector3 m_EulerAngleVelocity;
 
     public GameObject hud;
-   // public GameObject zones;
+   
+    // public GameObject zones;
     private void Start()
     {
         //Player.useGravity = true;
-        Debug.Log("^^^ start");
+ //       Debug.Log("^^^ start");
         ResetScene();
       
         
@@ -111,15 +112,15 @@ public class showhide3d : MonoBehaviour
     {
        // zones.SetActive(false);
             
-            Debug.Log("^^^ resetscene");
+       //     Debug.Log("^^^ resetscene");
         trainingDone = PlayerPrefs.GetInt("trainingDone");
         toggler = false;
         Player = GameObject.Find("Player").GetComponent<Rigidbody>();
-        Debug.Log("kkk0 stopFilm value at start" + PlayerPrefs.GetInt("stopFilm"));
+      //  Debug.Log("kkk0 stopFilm value at start" + PlayerPrefs.GetInt("stopFilm"));
         //    quick exit if going back to reception
              if (trainingDone == 0)
             {
-            Debug.Log("^^^ trainingDone 0");
+      //      Debug.Log("^^^ trainingDone 0");
             Player.transform.position = targetStartReception.transform.position;
             Player.transform.SetParent(targetStartReception.transform);
             toggler = true;
@@ -129,17 +130,18 @@ public class showhide3d : MonoBehaviour
         //otherwise run script
         else if (trainingDone == 1)
         {
-            Debug.Log("^^^ trainingDone 1");
+      //      Debug.Log("^^^ trainingDone 1");
 
-            Debug.Log("rrr1 into the whereto");
+      //      Debug.Log("rrr1 into the whereto");
             whereto();
         }
+    
 
-    }
+}
 
         private void whereto()
     {
-        Debug.Log("^^^ whereto");
+      //  Debug.Log("^^^ whereto");
 
         //get player prefs and assign to variables
         returntoscene = PlayerPrefs.GetString("returntoscene");
@@ -150,10 +152,10 @@ public class showhide3d : MonoBehaviour
         stopFilm = PlayerPrefs.GetInt("stopFilm");
         //  behaviour = PlayerPrefs.GetString("behaviour");
         //   behaviour = PlayerPrefs.GetString("behaviour");
-        Debug.Log("ppp what is trainingDone " + trainingDone);
-        Debug.Log("ppp top what is behaviour " + behaviour);
-        Debug.Log("ppp top what is nextscene " + nextscene);
-        Debug.Log("ppp top what is returntoscene " + returntoscene);
+  //      Debug.Log("ppp what is trainingDone " + trainingDone);
+  //      Debug.Log("ppp top what is behaviour " + behaviour);
+  //      Debug.Log("ppp top what is nextscene " + nextscene);
+   //     Debug.Log("ppp top what is returntoscene " + returntoscene);
 
         {
             //if we have no behaviour set and we aren't launching a film or going to the tips or intercepting the films
@@ -163,10 +165,10 @@ public class showhide3d : MonoBehaviour
             {
                 notFilms.SetActive(true);
                 hud.SetActive(true);
-                Debug.Log("kkk1 in quick exit act" + nextscene);
+             //   Debug.Log("kkk1 in quick exit act" + nextscene);
                 Player.transform.position = targetactivityCentre.transform.position;
                 Player.transform.SetParent(targetactivityCentre.transform);
-                Debug.Log("^^^ to activity centre");
+    //            Debug.Log("^^^ to activity centre");
             }
 
 
@@ -176,8 +178,8 @@ public class showhide3d : MonoBehaviour
 
             else
             {
-                Debug.Log("kkk2 goToNextScene");
-                Debug.Log("^^^ proceed to nextscene fn");
+    //            Debug.Log("kkk2 goToNextScene");
+     //           Debug.Log("^^^ proceed to nextscene fn");
                 goToNextScene();
             }
             //goToNextScene();
@@ -187,33 +189,33 @@ public class showhide3d : MonoBehaviour
     private void goToNextScene()
 
     {
-        Debug.Log("lll next scene is: " + nextscene);
+     //   Debug.Log("lll next scene is: " + nextscene);
          if (PlayerPrefs.HasKey("stopFilm"))
         {
-            Debug.Log("film intercept kkk3" + PlayerPrefs.GetInt("stopFilm"));
-            Debug.Log("^^^ stopfilm");
+      //      Debug.Log("film intercept kkk3" + PlayerPrefs.GetInt("stopFilm"));
+       //     Debug.Log("^^^ stopfilm");
             stopTheFilm();
            
         }
        
         else if (nextscene == "sectors")
         {
-            Debug.Log("^^^ sectors");
+       //     Debug.Log("^^^ sectors");
             goToSectors();
 
         }
         else if (nextscene == "hospital")
         {
-            Debug.Log("^^^ hospital");
+       //     Debug.Log("^^^ hospital");
             runVR();
-          Debug.Log("kkk4 go to nextscene hospital");
+       //   Debug.Log("kkk4 go to nextscene hospital");
 
         }
 
         else if (nextscene == "phobia" )
         {
-            Debug.Log("^^^ phobias");
-            Debug.Log("kkk5 in returntoscene phobia go to function");
+       //     Debug.Log("^^^ phobias");
+       //     Debug.Log("kkk5 in returntoscene phobia go to function");
             gotophobias();
 
         }
@@ -282,37 +284,37 @@ public class showhide3d : MonoBehaviour
 
         else if (nextscene == "register")
         {
-            Debug.Log("kkk8 register"); 
+      //      Debug.Log("kkk8 register"); 
             SceneManager.LoadScene("register");
             PlayerPrefs.SetString("nextscene", returntoscene);
             PlayerPrefs.DeleteKey("returntoscene");
-            Debug.Log("^^^ register");
+      //      Debug.Log("^^^ register");
 
 
         }
 
         else if (nextscene == "dashboard")
         {
-            Debug.Log("kkk9 dashboard");
+       //     Debug.Log("kkk9 dashboard");
 
             SceneManager.LoadScene("dashboard");
             PlayerPrefs.SetString("nextscene", returntoscene);
             PlayerPrefs.DeleteKey("returntoscene");
-            Debug.Log("^^^ dashboard");
+       //     Debug.Log("^^^ dashboard");
 
         }
 
         else
         {
-            Debug.Log("kkk10 runVR");
-            Debug.Log("^^^ runVR");
+       //     Debug.Log("kkk10 runVR");
+       //     Debug.Log("^^^ runVR");
             runVR();
         }
     }
 
     public void runVR()
     {
-        Debug.Log("kkk11 runVR");
+      //  Debug.Log("kkk11 runVR");
         notFilms.SetActive(true);
         hud.SetActive(true);
         //   PlayerPrefs.DeleteKey("nextscene");
@@ -322,13 +324,13 @@ public class showhide3d : MonoBehaviour
          
     public void goToBehaviourChange()
     {
-            Debug.Log("kkk12 in hospital function");
-        Debug.Log("^^^ behaviour change");
+     //       Debug.Log("kkk12 in hospital function");
+      //  Debug.Log("^^^ behaviour change");
         terrain.SetActive(true);
         if (behaviour == "alcohol")
 
         {
-            Debug.Log("^^^ alcohol");
+     //       Debug.Log("^^^ alcohol");
             if (stage == 0)
             {
                      
@@ -338,12 +340,12 @@ public class showhide3d : MonoBehaviour
                 alcoholfinish.SetActive(false);
                 Player.transform.position = targetalcohol1.transform.position;
                 Player.transform.SetParent(targetalcohol1.transform);
-                Debug.Log("kkk13 in alcohol stage 0");
-                Debug.Log("^^^ alcohol0");
+      //          Debug.Log("kkk13 in alcohol stage 0");
+       //         Debug.Log("^^^ alcohol0");
             }
       else if (stage == 1)
             {
-                Debug.Log("kkk14 in alcohol stage 1");
+       //         Debug.Log("kkk14 in alcohol stage 1");
                 alcoholintro.SetActive(false);
                 alcoholfollow.SetActive(true);
                 alcoholsolution.SetActive(false);
@@ -351,28 +353,28 @@ public class showhide3d : MonoBehaviour
 
                 Player.transform.position = targetalcohol2.transform.position;
                 Player.transform.SetParent(targetalcohol2.transform);
-                Debug.Log("^^^ alcohol1");
+       //         Debug.Log("^^^ alcohol1");
             }
             else if (stage == 2)
             {
-                Debug.Log("kkk15 in alcohol stage 2");
+       //         Debug.Log("kkk15 in alcohol stage 2");
                 alcoholintro.SetActive(false);
                 alcoholfollow.SetActive(false);
                 alcoholsolution.SetActive(true);
                 alcoholfinish.SetActive(false);
                 Player.transform.position = targetalcohol3.transform.position;
                 Player.transform.SetParent(targetalcohol3.transform);
-                Debug.Log("^^^ alcohol2");
+         //       Debug.Log("^^^ alcohol2");
             }
 
             else if (stage == 3)
             {
-                Debug.Log("kkk16 in alcohol stage 3");
+        //        Debug.Log("kkk16 in alcohol stage 3");
                 alcoholintro.SetActive(false);
                 alcoholfollow.SetActive(false);
                 alcoholsolution.SetActive(false);
                 alcoholfinish.SetActive(true);
-                Debug.Log("^^^ alcohol3");
+        //        Debug.Log("^^^ alcohol3");
 
                 Player.transform.position = targetalcohol4.transform.position;
                 Player.transform.SetParent(targetalcohol4.transform);
@@ -382,13 +384,13 @@ public class showhide3d : MonoBehaviour
         }
         else if (behaviour == "smoking")
         {
-            Debug.Log("^^^ smoking");
+      //      Debug.Log("^^^ smoking");
             //    keyButtons.SetActive(true);
             //Welcome to smoking
             if (stage == 0)
             {
                 
-                Debug.Log("^^^ smoking0");
+        //        Debug.Log("^^^ smoking0");
 
                 welcomeSmoking.SetActive(true);
                 xrayResults.SetActive(false);
@@ -402,7 +404,7 @@ public class showhide3d : MonoBehaviour
             //Get XRay Results
             else if (stage == 1)
             {
-                Debug.Log("^^^ smoking1");
+         //       Debug.Log("^^^ smoking1");
                 welcomeSmoking.SetActive(false);
                 xrayResults.SetActive(true);
                 stopGoCtscan.SetActive(false);
@@ -417,7 +419,7 @@ public class showhide3d : MonoBehaviour
             //book CT Scan and go for scan when allowed
             else if (stage == 2)
             {
-                Debug.Log("^^^ smoking2");
+        //        Debug.Log("^^^ smoking2");
                 welcomeSmoking.SetActive(false);
                 xrayResults.SetActive(false);
                 stopGoCtscan.SetActive(true);
@@ -429,7 +431,7 @@ public class showhide3d : MonoBehaviour
 
                 if (PlayerPrefs.GetInt("delaynotification") >= 0)
                 {
-                    Debug.Log("^^^ smoking2 wait for CT");
+        //            Debug.Log("^^^ smoking2 wait for CT");
                     xrayResults.SetActive(false);
                     stopGoCtscan.SetActive(true);
                     preReadyCT.SetActive(true);
@@ -438,7 +440,7 @@ public class showhide3d : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("^^^ smoking2 ready for CT");
+          //          Debug.Log("^^^ smoking2 ready for CT");
 
                     readyCT.SetActive(true);
                     xrayResults.SetActive(false);
@@ -457,7 +459,7 @@ public class showhide3d : MonoBehaviour
             // get CT scan results
             else if (stage == 3)
             {
-                Debug.Log("^^^ smoking3");
+        //        Debug.Log("^^^ smoking3");
 
                 PlayerPrefs.DeleteKey("CTstartpoint");
                 PlayerPrefs.DeleteKey("delaynotification");
@@ -474,7 +476,7 @@ public class showhide3d : MonoBehaviour
 
             else if (stage == 4)
             {
-                Debug.Log("^^^ smoking4");
+       //         Debug.Log("^^^ smoking4");
 
                 welcomeSmoking.SetActive(false);
                 xrayResults.SetActive(false);
@@ -496,57 +498,57 @@ public class showhide3d : MonoBehaviour
         terrain.SetActive(true);
         if (behaviour == "travel")
         {
-            Debug.Log("^^^ travel");
+       //     Debug.Log("^^^ travel");
             Player.transform.position = targetTravel.transform.position;
             Player.transform.SetParent(targetTravel.transform);
         }
 
         else if (behaviour == "calm")
         {
-            Debug.Log("^^^ targetCalm");
+       //     Debug.Log("^^^ targetCalm");
             Player.transform.position = targetCalm.transform.position;
             Player.transform.SetParent(targetCalm.transform);
         }
         else if (behaviour == "adrenaline")
         {
-            Debug.Log("^^^ targetAdrenaline");
+       //     Debug.Log("^^^ targetAdrenaline");
             Player.transform.position = targetAdrenaline.transform.position;
             Player.transform.SetParent(targetAdrenaline.transform);
         }
         else if (behaviour == "museums")
         {
-            Debug.Log("^^^ targetMuseums");
+      //      Debug.Log("^^^ targetMuseums");
             Player.transform.position = targetMuseums.transform.position;
             Player.transform.SetParent(targetMuseums.transform);
         }
         else if (behaviour == "history")
         {
-            Debug.Log("^^^ targetHistory");
+      //      Debug.Log("^^^ targetHistory");
             Player.transform.position = targetHistory.transform.position;
             Player.transform.SetParent(targetHistory.transform);
         }
         else if (behaviour == "beaches")
         {
-            Debug.Log("^^^ targetBeaches");
+       //     Debug.Log("^^^ targetBeaches");
             Player.transform.position = targetBeaches.transform.position;
             Player.transform.SetParent(targetBeaches.transform);
         }
         else if (behaviour == "parks")
         {
-            Debug.Log("^^^ targetParks");
+       //     Debug.Log("^^^ targetParks");
             Player.transform.position = targetParks.transform.position;
             Player.transform.SetParent(targetParks.transform);
         }
         else if (behaviour == "space")
         {
-            Debug.Log("^^^ targetSpace");
+         //   Debug.Log("^^^ targetSpace");
             Player.transform.position = targetSpace.transform.position;
             Player.transform.SetParent(targetSpace.transform);
         }
     }
     public void gotophobias()
     {
-        Debug.Log("^^^ phobias top");
+      //  Debug.Log("^^^ phobias top");
         hud.SetActive(true);
         terrain.SetActive(true);
         //just uncommented; maybe recomment
@@ -554,10 +556,10 @@ public class showhide3d : MonoBehaviour
        
          if (behaviour == "heights")
         {
-            Debug.Log("^^^ heights top");
+         //   Debug.Log("^^^ heights top");
             if (stage == 1)
             {
-                Debug.Log("^^^ heights 1");
+        //        Debug.Log("^^^ heights 1");
 
                 Player.transform.position = targetPhobias1.transform.position;
                 Player.transform.SetParent(targetPhobias1.transform);
@@ -566,14 +568,14 @@ public class showhide3d : MonoBehaviour
             }
             else if (stage == 2)
             {
-                Debug.Log("^^^ heights 2");
+        //        Debug.Log("^^^ heights 2");
                 Player.transform.position = targetPhobias2.transform.position;
                 Player.transform.SetParent(targetPhobias2.transform);
 
             }
             else if (stage == 3)
             {
-                Debug.Log("^^^ heights 3");
+       //         Debug.Log("^^^ heights 3");
                 Player.transform.position = targetPhobias3.transform.position;
                 Player.transform.SetParent(targetPhobias3.transform);
             }
@@ -581,7 +583,7 @@ public class showhide3d : MonoBehaviour
 
         else if (behaviour == "sharks")
         {
-            Debug.Log("^^^ sharks");
+         //   Debug.Log("^^^ sharks");
             Player.transform.position = targetSharks.transform.position;
             Player.transform.SetParent(targetSharks.transform);
         }
@@ -593,7 +595,7 @@ public class showhide3d : MonoBehaviour
     }
     public void stopTheFilm()
     {
-        Debug.Log("^^^ stopTheFilm");
+       // Debug.Log("^^^ stopTheFilm");
         notFilms.SetActive(true);
         terrain.SetActive(true);
         hud.SetActive(true);

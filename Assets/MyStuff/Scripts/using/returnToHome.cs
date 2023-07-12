@@ -38,11 +38,11 @@ public class returnToHome : MonoBehaviour
     private void Start()
     {
         trainingDone = PlayerPrefs.GetInt("trainingDone");
-        Debug.Log("eee button option1 : " + trainingDone);
-        Debug.Log("eee chooseOption : " + chooseOption);
+    //    Debug.Log("eee button option1 : " + trainingDone);
+      //  Debug.Log("eee chooseOption : " + chooseOption);
         //getStage = PlayerPrefs.GetInt("stage");
         //behaviour = PlayerPrefs.GetString("behaviour");
-        Debug.Log("trainingDone: " + trainingDone);
+      //  Debug.Log("trainingDone: " + trainingDone);
     }
 
     void Update()
@@ -97,7 +97,7 @@ public class returnToHome : MonoBehaviour
                 }
 
                
-                Debug.Log("button option : " + trainingDone);
+        //        Debug.Log("button option : " + trainingDone);
 
                 showandhide();
 
@@ -141,7 +141,7 @@ public class returnToHome : MonoBehaviour
     }
     private void showandhide()
     {
-        Debug.Log("calling showhide3d kkk");
+     //   Debug.Log("calling showhide3d kkk");
         //    TargetObject.SetActive(true);
         player.transform.position = cameratarget.transform.position;
         //TargetObject.SetActive(true);
