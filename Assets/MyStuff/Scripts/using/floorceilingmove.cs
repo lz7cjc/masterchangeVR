@@ -23,10 +23,17 @@ public class floorceilingmove : MonoBehaviour
     public Sprite spriteHover;
     public Sprite spriteSelect;
     public TMP_Text speedvalue;
+    public TMP_Text speedvalue1;
+    public TMP_Text speedvalue2;
+    public TMP_Text speedvalue3;
 
-   private bool changeSpeed;
+    public SpriteRenderer spriterenderer1;
+    public SpriteRenderer spriterenderer2;
+    public SpriteRenderer spriterenderer3;
+    private bool changeSpeed;
+  
 
- //   public showHideHUDMove showHideHUDMove;
+    //   public showHideHUDMove showHideHUDMove;
 
     //old script
     void FixedUpdate()
@@ -42,6 +49,9 @@ public class floorceilingmove : MonoBehaviour
         //        Debug.Log("hhh1");
                 counter += Time.deltaTime;
                 spriterenderer.sprite = spriteHover;
+                spriterenderer1.sprite = spriteHover;
+                spriterenderer2.sprite = spriteHover;
+                spriterenderer3.sprite = spriteHover;
             }
 
             //////////////////////
@@ -56,8 +66,14 @@ public class floorceilingmove : MonoBehaviour
                 speedSet = speedSet + deltaSpeed;
                 //PlayerPrefs.SetInt("walkSpeed", ((int)speedSet));
                 spriterenderer.sprite = spriteSelect;
+                spriterenderer1.sprite = spriteSelect;
+                spriterenderer2.sprite = spriteSelect;
+                spriterenderer3.sprite = spriteSelect;
                 //   Debug.Log(" speedSet = speed" + speedSet);
                 speedvalue.text = speedSet.ToString();
+                speedvalue1.text = speedSet.ToString();
+                speedvalue2.text = speedSet.ToString();
+                speedvalue3.text = speedSet.ToString();
             }
             else if (counter >= Delay && !toggler && !changeSpeed)
             {
@@ -68,8 +84,14 @@ public class floorceilingmove : MonoBehaviour
                 speedSet = speed;
                 //PlayerPrefs.SetInt("walkSpeed", ((int)speedSet));
                 spriterenderer.sprite = spriteSelect;
+                spriterenderer1.sprite = spriteSelect;
+                spriterenderer2.sprite = spriteSelect;
+                spriterenderer3.sprite = spriteSelect;
                 //   Debug.Log(" speedSet = speed" + speedSet);
                 speedvalue.text = speedSet.ToString();
+                speedvalue1.text = speedSet.ToString();
+                speedvalue2.text = speedSet.ToString();
+                speedvalue3.text = speedSet.ToString();
             }
             //already moving?
             else if (counter < DelayStop && move && !changeSpeed)
@@ -79,6 +101,9 @@ public class floorceilingmove : MonoBehaviour
                 //    Debug.Log("stopping counter < DelayStop && move");
                 counter += Time.deltaTime;
                 spriterenderer.sprite = spriteSelect;
+                spriterenderer1.sprite = spriteSelect;
+                spriterenderer2.sprite = spriteSelect;
+                spriterenderer3.sprite = spriteSelect;
 
             }
             else if (counter >= DelayStop && !toggler && !changeSpeed)
@@ -87,6 +112,9 @@ public class floorceilingmove : MonoBehaviour
                 toggler = !toggler;
                 move = !move;
                 spriterenderer.sprite = sprite;
+                spriterenderer1.sprite = sprite;
+                spriterenderer2.sprite = sprite;
+                spriterenderer3.sprite = sprite;
                 speedSet = 0;
                 PlayerPrefs.SetInt("walkSpeed", ((int)speedSet));
             }
@@ -94,6 +122,9 @@ public class floorceilingmove : MonoBehaviour
         if (speedSet > 0)
         {
             spriterenderer.sprite = spriteSelect;
+            spriterenderer1.sprite = spriteSelect;
+            spriterenderer2.sprite = spriteSelect;
+            spriterenderer3.sprite = spriteSelect;
             LetsGo();
         }
     }
@@ -154,6 +185,9 @@ public class floorceilingmove : MonoBehaviour
     {
         //  Debug.Log("inmouseneter floorceiling hhh" + toggler);
         spriterenderer.sprite = spriteHover;
+        spriterenderer1.sprite = spriteHover;
+        spriterenderer2.sprite = spriteHover;
+        spriterenderer3.sprite = spriteHover;
         mouseHover = true;
         
         Debug.Log("changeSpeed111" + changeSpeed);
@@ -165,6 +199,9 @@ public class floorceilingmove : MonoBehaviour
     {
         //  Debug.Log("inmouseneter floorceiling hhh" + toggler);
         spriterenderer.sprite = spriteHover;
+        spriterenderer1.sprite = spriteHover;
+        spriterenderer2.sprite = spriteHover;
+        spriterenderer3.sprite = spriteHover;
         mouseHover = true;
         changeSpeed = true;
         Debug.Log("changeSpeed222" + changeSpeed);
@@ -177,6 +214,9 @@ public class floorceilingmove : MonoBehaviour
         if (!toggler)
         {
             spriterenderer.sprite = sprite;
+            spriterenderer1.sprite = sprite;
+            spriterenderer2.sprite = sprite;
+            spriterenderer3.sprite = sprite;
         }
         mouseHover = false;
         toggler = false;
