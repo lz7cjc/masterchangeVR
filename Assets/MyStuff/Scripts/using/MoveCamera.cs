@@ -38,7 +38,11 @@ public class MoveCamera : MonoBehaviour
 
 
             Counter += Time.deltaTime;
-           
+           if (Counter >0.75)
+            {
+                startStopMove(tempStop = true);
+            }
+
             if (Counter >= 3)
             {
                 mousehover = false;
@@ -54,7 +58,7 @@ public class MoveCamera : MonoBehaviour
     // mouse Enter event
     public void MouseHoverChangeScene()
     {
-        startStopMove(tempStop = true);
+        
         TMP_title.color = Color.white;
         mousehover = true;
        

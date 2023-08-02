@@ -15,7 +15,7 @@ public class ignoreFirstVisit : MonoBehaviour
     {
         //PlayerPrefs.SetInt("firstScreenHide", 0);
         HideStartScreen = PlayerPrefs.GetInt("IntroScreen");
-    //    Debug.Log("gethideScreen in start ()" + HideStartScreen);
+        Debug.Log("gethideScreen in start ()" + HideStartScreen);
 
         if (HideStartScreen == 1) 
         {

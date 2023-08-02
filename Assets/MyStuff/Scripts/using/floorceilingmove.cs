@@ -31,22 +31,27 @@ public class floorceilingmove : MonoBehaviour
     public SpriteRenderer spriterenderer2;
     public SpriteRenderer spriterenderer3;
     private bool changeSpeed;
-  
+
+    private showHideHUDMove showHideHUDMove;
 
     //   public showHideHUDMove showHideHUDMove;
 
     //old script
     void FixedUpdate()
     {
+        speedvalue.text = speedSet.ToString();
+        speedvalue1.text = speedSet.ToString();
+        speedvalue2.text = speedSet.ToString();
+        speedvalue3.text = speedSet.ToString();
         if (mouseHover)
         {
            
-            //  Debug.Log("hhh1 mouseHover speed is" + speedSet + " because I am moving:" + move);
+              Debug.Log("hhh mouseHover speed is" + speedSet + " because I am moving:" + move);
             counter += Time.deltaTime;
             //waiting to hit threshold to trigger walking
             if (counter < Delay && !move)
             {
-        //        Debug.Log("hhh1");
+                Debug.Log("hhh0");
                 counter += Time.deltaTime;
                 spriterenderer.sprite = spriteHover;
                 spriterenderer1.sprite = spriteHover;
@@ -60,7 +65,7 @@ public class floorceilingmove : MonoBehaviour
             else if (counter >= Delay && !toggler && changeSpeed)
             {
 
-                       Debug.Log("change speed section");
+                       Debug.Log("hhh1 change speed section");
                 toggler = !toggler;
                 move = !move;
                 speedSet = speedSet + deltaSpeed;
@@ -74,11 +79,14 @@ public class floorceilingmove : MonoBehaviour
                 speedvalue1.text = speedSet.ToString();
                 speedvalue2.text = speedSet.ToString();
                 speedvalue3.text = speedSet.ToString();
+
+                showHideHUDMove = FindObjectOfType<showHideHUDMove>();
+                showHideHUDMove.showWalkSub();
             }
             else if (counter >= Delay && !toggler && !changeSpeed)
             {
 
-                //        Debug.Log("hhh2");
+                       Debug.Log("hhh2");
                 toggler = !toggler;
                 move = !move;
                 speedSet = speed;
@@ -87,18 +95,20 @@ public class floorceilingmove : MonoBehaviour
                 spriterenderer1.sprite = spriteSelect;
                 spriterenderer2.sprite = spriteSelect;
                 spriterenderer3.sprite = spriteSelect;
-                //   Debug.Log(" speedSet = speed" + speedSet);
+                  Debug.Log(" speedSet = speed" + speedSet.ToString());
                 speedvalue.text = speedSet.ToString();
                 speedvalue1.text = speedSet.ToString();
                 speedvalue2.text = speedSet.ToString();
                 speedvalue3.text = speedSet.ToString();
+                showHideHUDMove = FindObjectOfType<showHideHUDMove>();
+                showHideHUDMove.showWalkSub();
             }
             //already moving?
             else if (counter < DelayStop && move && !changeSpeed)
 
             {
-                //       Debug.Log("hhh3");
-                //    Debug.Log("stopping counter < DelayStop && move");
+                      Debug.Log("hhh3");
+                   Debug.Log("stopping counter < DelayStop && move");
                 counter += Time.deltaTime;
                 spriterenderer.sprite = spriteSelect;
                 spriterenderer1.sprite = spriteSelect;
@@ -106,6 +116,8 @@ public class floorceilingmove : MonoBehaviour
                 spriterenderer3.sprite = spriteSelect;
 
             }
+
+            //from moving to stop
             else if (counter >= DelayStop && !toggler && !changeSpeed)
             {
                 //       Debug.Log("hhh4");
@@ -117,6 +129,8 @@ public class floorceilingmove : MonoBehaviour
                 spriterenderer3.sprite = sprite;
                 speedSet = 0;
                 PlayerPrefs.SetInt("walkSpeed", ((int)speedSet));
+                showHideHUDMove = FindObjectOfType<showHideHUDMove>();
+                showHideHUDMove.hideWalkSub();
             }
         }
         if (speedSet > 0)
@@ -235,7 +249,11 @@ public class floorceilingmove : MonoBehaviour
           // Debug.Log("in letsgo speed is wwww  " + speedSet + mouseHover + move);
      player.MovePosition(transform.position + Camera.main.transform.forward * 0 * Time.deltaTime);
         toggler = false;
-       
+        spriterenderer.sprite = sprite;
+        spriterenderer1.sprite = sprite;
+        spriterenderer2.sprite = sprite;
+        spriterenderer3.sprite = sprite;
+
         mouseHover = false;
        
         counter = 0;

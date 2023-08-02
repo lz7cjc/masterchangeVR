@@ -63,7 +63,7 @@ public class returnToHome : MonoBehaviour
                     //return to start
                 {
                     PlayerPrefs.SetInt("trainingDone", 1);
-                    PlayerPrefs.SetInt("stage", 0);
+                 //   PlayerPrefs.SetInt("stage", 0);
                     PlayerPrefs.DeleteKey("CTStartPoint");
                     PlayerPrefs.DeleteKey("delaynotification");
                    
@@ -81,19 +81,19 @@ public class returnToHome : MonoBehaviour
                 else if  (chooseOption == 3)
                 {
                     PlayerPrefs.SetInt("trainingDone", 1);
-                    PlayerPrefs.DeleteKey("stage");
-                    PlayerPrefs.DeleteKey("behaviour");
-                    PlayerPrefs.DeleteKey("nextscene");
-                    PlayerPrefs.DeleteKey("returntoscene");
+                   // PlayerPrefs.DeleteKey("stage");
+                   // PlayerPrefs.DeleteKey("behaviour");
+                   // PlayerPrefs.DeleteKey("nextscene");
+                   // PlayerPrefs.DeleteKey("returntoscene");
                 }
                 // go to reception
                 else if (chooseOption == 4)
                 {
                     PlayerPrefs.SetInt("trainingDone", 0);
-                    PlayerPrefs.DeleteKey("stage");
-                    PlayerPrefs.DeleteKey("behaviour");
-                    PlayerPrefs.DeleteKey("nextscene");
-                    PlayerPrefs.DeleteKey("returntoscene");
+              //      PlayerPrefs.DeleteKey("stage");
+                //    PlayerPrefs.DeleteKey("behaviour");
+                  //  PlayerPrefs.DeleteKey("nextscene");
+                    //PlayerPrefs.DeleteKey("returntoscene");
                 }
 
                

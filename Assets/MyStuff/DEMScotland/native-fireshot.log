@@ -1,0 +1,13 @@
+27-07-23 13:09:10.758  Started
+27-07-23 13:09:10.758  With command line: E:\Development\masterchange2023\Assets\MyStuff\DEMScotland\fireshot-chrome-plugin.exe 
+27-07-23 13:09:10.758  Target engine is: Chromium
+27-07-23 13:09:10.761  Using folder for deployment: C:\Users\nick\AppData\Roaming\FireShot\1.12.18
+27-07-23 13:09:10.761  Created directory with result: 1
+27-07-23 13:09:10.761  Copying myself...
+27-07-23 13:09:10.762  Target Native host already exists, nothing to copy.
+27-07-23 13:09:10.762  Extracting manifest...
+27-07-23 13:09:10.763  Written 642 bytes
+27-07-23 13:09:10.764  Done
+27-07-23 13:09:10.764  Writing registry...
+27-07-23 13:09:10.766  Successfully registered to HKEY_CURRENT_USER
+27-07-23 13:09:10.766  Exit

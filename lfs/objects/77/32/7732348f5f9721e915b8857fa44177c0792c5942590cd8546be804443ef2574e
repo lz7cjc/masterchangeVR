@@ -1,0 +1,152 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/FirstVisit.unity
+    guid: 7248a5f1fa1eb5c48b2a1dcecedc5717
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/about.unity
+    guid: 8324b6b5a6069a24aa44d3ec4679896a
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/behaviours.unity
+    guid: ea8b15a9bb228f640b6adecd455f0623
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/Bio.unity
+    guid: 6b825562c09f8b24b96c4ea2db5df7ae
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/Buy.unity
+    guid: 4ac2d7098df08f44e84372817ee82893
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/using/remove/buyriros.unity
+    guid: a8643502aa1d3344d911638922d3703e
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/cancelhospital.unity
+    guid: 697f09f090a5e864a9722cc600f50500
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/credits.unity
+    guid: ba10442b35442f447bd07f9be61e87d5
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/dashboard.unity
+    guid: bff6256e1b79b564fb5f9bea82f582c8
+  - enabled: 0
+    path: Assets/MyStuff/Scenes/2d/deleteplayerprefs.unity
+    guid: 93193dde1406fc545a1dcdea493ed4b7
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/videoplayer2d.unity
+    guid: 8e57749bb4dafd04f98f8bcf77f49592
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/3d/videoplayer.unity
+    guid: bbac67fcfe6aaa2429e63d905533a6ed
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/earn riros.unity
+    guid: 1ac4a5a609fd1cd428482dcc5fd0368c
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/Environment.unity
+    guid: 5858ec39008226b478cf15f95da0c1c1
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/everything.unity
+    guid: 59f6994b8e4309f4c8263ce6cd0733d8
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/factors.unity
+    guid: c9cbf9dbce6a5fa419f29cf0c6ead678
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/Feedback.unity
+    guid: 5ffbcdfa097b3c648800291f77de8b1b
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/feedbackconfirm.unity
+    guid: 82d4867089c05804082ed38bea564ebd
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/using/remove/flipvr.unity
+    guid: 368d42adff6d8a440bc532b205d86588
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/food.unity
+    guid: b2343c0caea44304eb9b9f6516c94262
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/habits results.unity
+    guid: a718435b5c70e3047bf96726c956df74
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/habits1db.unity
+    guid: 27e6e490e0cefca4cba989d13534d063
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/habitsdb.unity
+    guid: 478b4ae2e1f0d4f48877ed1e185ebbe4
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/health.unity
+    guid: a2a88ca2d9ce9a94eabdccfd66b381c3
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/3d/mainVR.unity
+    guid: b4723d096e55fab4988fef17ece03e45
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/logon.unity
+    guid: 8d180d0c8a81d9c4aa1b82c698f1a66c
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/passwordreminder.unity
+    guid: 4717aa473f0e4e8439e407d550ba8fc2
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/passwordreset.unity
+    guid: 66d6dada686ba674687c6749ee2d211f
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/passwordresetcomplete.unity
+    guid: 25d368c80579f804295a131d610f3bea
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/preregister.unity
+    guid: 9de815d4141cdf94f81db514c183efda
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/Privacy.unity
+    guid: a3597e2fa0841044b870bd427fc0b27b
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/reasons2.unity
+    guid: 953677034bf8f7b41ab8a57c255ea9aa
+  - enabled: 0
+    path: Assets/MyStuff/Scenes/2d/using/remove/reasonsdupe.unity
+    guid: 1fd5ba76515511e438b9e5241227b2ec
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/reasonsforquitting.unity
+    guid: 4bd0ec8799dc9a04eadfe2e03ae7dac1
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/register.unity
+    guid: 03c737a4b5c31254e815fb4863493fcf
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/settings.unity
+    guid: 085683fa79fcd674b9ade7291a7adb46
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/smokinghome.unity
+    guid: 5dfd1da4c248f4f449f8d1e2da69967e
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/switchtovr.unity
+    guid: 6cd67db103c77b5488a8712ca9cc1da3
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/triggers.unity
+    guid: 166be2627e6570640955e07d6cf67054
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/vote confirmation.unity
+    guid: 4a8aa3e4f6229ea409644d462f9eef51
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/alcohol tracker/drinkcalender.unity
+    guid: 3b69f59edbf589341af658e532ad0702
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/alcohol tracker/drinkintro.unity
+    guid: 0fd48b2f47307504eafdc82089297ecb
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/alcohol tracker/drinkrecord.unity
+    guid: 00524e9ea15cf8c438a116eef41232eb
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/alcohol tracker/viewunits.unity
+    guid: 67263eb3874cf8546b03e1b7fe1ab5d7
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/Voting.unity
+    guid: 9e52c5dc4e29dc549899f469bd458136
+  - enabled: 1
+    path: Assets/MyStuff/Scenes/2d/using/remove/Welcome 1.unity
+    guid: bc56ad4ee127cc346997488f46d3646f
+  m_configObjects:
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: f099949da25e71e438b154464a22e098,
+      type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: a6c418877d8c75b46968101e3cc3e4bc,
+      type: 2}
+    xr.sdk.mock-hmd.settings: {fileID: 11400000, guid: 326d773104c37a24da0a3ec335b0dbb7,
+      type: 2}

@@ -16,6 +16,7 @@ public class averagetip : MonoBehaviour
     public Image star1;
     public Image star2;
     public Image star3;
+   // public GameObject goStar1;
      //public Text errorMessage;
     private int average;
     // private float likeratio;
@@ -43,12 +44,12 @@ public class averagetip : MonoBehaviour
         {
 
             string json = www.downloadHandler.text;
-         //    Debug.Log("vvvv json is " + json + "filurl:" + filmURL);
+            Debug.Log("vvvv json is " + json + "filurl:" + filmURL);
             averageTips loadedresults = JsonUtility.FromJson<averageTips>(json);
 
             {
                average = loadedresults.score;
-          //      Debug.Log("average score is" + average);
+               Debug.Log("average score is" + average);
             }
 
               if ((average > 250) && (average <= 450))
@@ -57,11 +58,11 @@ public class averagetip : MonoBehaviour
                 star1.enabled = true;
                 star2.enabled = false;
                 star3.enabled = false;
-              //  Debug.Log("in 1");
+                Debug.Log("in 1");
             }
             else if ((average > 451) && (average <= 750))
             {
-          //      Debug.Log("2 star");
+                Debug.Log("2 star");
                 star1.enabled = true;
                 star2.enabled = true;
                 star3.enabled = false;
@@ -73,15 +74,16 @@ public class averagetip : MonoBehaviour
                 star1.enabled = true;
                 star2.enabled = true;
                 star3.enabled = true;
-            //    Debug.Log("in over 5");
+               Debug.Log("in over 5");
             }
 
-            else
+            else if (average < 250)
             {
-                star1.enabled = false;
+               star1.enabled = false;
+               // goStar1.SetActive(false);
                 star2.enabled = false;
                 star3.enabled = false;
-             
+                Debug.Log("in none");
 
             }
 

@@ -16,7 +16,8 @@ public class showHideHUDMove : MonoBehaviour
 
     public bool mousehover = false;
    // public GameObject altImage;
-    public float Counter = 0;
+    private float Counter = 0;
+    public float delay; 
    // public bool turnoff;
    public GameObject speedSet;
     //  public GameObject hud;
@@ -46,29 +47,41 @@ public class showHideHUDMove : MonoBehaviour
 
             Counter += Time.deltaTime;
 
-            if (Counter >= 3)
+            if (Counter >= delay)
             {
                 mousehover = false;
                 Counter = 0;
                 if (turnon)
                 {
-                    Debug.Log("12345 update");
-                    speedSet.SetActive(true);
-                    hudZones.SetActive(false);
-                    turnon = false;
 
+                    showWalkSub();
+                    
                 }
                 else
                 {
-                    speedSet.SetActive(false);
-                    turnon = true;
 
+                    hideWalkSub();
 
                 }
             }
         }
     }
 
+    public void showWalkSub()
+    {
+        Debug.Log("12345 update");
+        speedSet.SetActive(true);
+        hudZones.SetActive(false);
+        turnon = false;
+
+    }
+
+
+    public void hideWalkSub()
+    {
+        speedSet.SetActive(false);
+        turnon = true;
+    }
     // mouse Enter event
     public void MouseHoverChangeScene()
     {

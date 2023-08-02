@@ -429,7 +429,7 @@ public class showhide3d : MonoBehaviour
                 setCTdate = FindObjectOfType<setCTdate>();
                 setCTdate.setReferenceDate();
 
-                if (PlayerPrefs.GetInt("delaynotification") >= 0)
+                if (PlayerPrefs.GetInt("delaynotification") > 0)
                 {
         //            Debug.Log("^^^ smoking2 wait for CT");
                     xrayResults.SetActive(false);
@@ -471,7 +471,8 @@ public class showhide3d : MonoBehaviour
                 smokingDone.SetActive(false);
                 Player.transform.position = targetSmoking0.transform.position;
                 Player.transform.SetParent(targetSmoking0.transform);
-
+                PlayerPrefs.DeleteKey("delaynotification");
+                PlayerPrefs.DeleteKey("CTstartpoint");
             }
 
             else if (stage == 4)
