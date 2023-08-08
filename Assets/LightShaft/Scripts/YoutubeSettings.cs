@@ -328,8 +328,8 @@ namespace LightShaft.Scripts
                     is360 = true;
                     if (debug)
                         Debug.Log("Possible 360 video");
-                    videoPlayer.renderMode = VideoRenderMode.RenderTexture;
-                    videoPlayer.aspectRatio = VideoAspectRatio.NoScaling;
+                    //videoPlayer.renderMode = VideoRenderMode.RenderTexture;
+                    //videoPlayer.aspectRatio = VideoAspectRatio.NoScaling;
                 }
                 else
                 {
@@ -353,7 +353,8 @@ namespace LightShaft.Scripts
                         if (debug)
                             Debug.Log("IS 3D");
                         RenderSettings.skybox = skyboxMaterial3DSide;
-                        UrlsLoaded();
+                        if(!alreadyGotUrls)
+                            UrlsLoaded();
                     }
                     else
                     {
@@ -364,7 +365,8 @@ namespace LightShaft.Scripts
                                 Debug.Log("Not a 3D");
                             RenderSettings.skybox = skyboxMaterialNormal;
                             //LoadANon3DVideoFromServer(_videoUrl, _formatCode);
-                            UrlsLoaded();
+                            if (!alreadyGotUrls)
+                                UrlsLoaded();
                         }
 
                     }
@@ -378,7 +380,8 @@ namespace LightShaft.Scripts
                         IEnumerable<ExtractionInfo> downloadUrls = ExtractDownloadUrls(requestResult);
                         youtubeVideoInfos = GetVideoInfos(downloadUrls, videoTitle).ToList();
                         request.downloadHandler.Dispose();
-                        UrlsLoaded();   //call direct to extract the video infos.
+                        if (!alreadyGotUrls)
+                            UrlsLoaded();   //call direct to extract the video infos.
                     }
                 }
             }
@@ -642,6 +645,7 @@ namespace LightShaft.Scripts
             //Force play webm on windows builds to prevent a issue on early windows 11 codecs.
             videoFormat = VideoFormatType.WEBM;
 #endif
+
 
             if (!loadYoutubeUrlsOnly)
             {
@@ -1197,6 +1201,7 @@ namespace LightShaft.Scripts
         //The callback when the url's are loaded.
         private void UrlsLoaded()
         {
+
             gettingYoutubeURL = false;
             List<VideoInfo> videoInfos = youtubeVideoInfos;
 
@@ -1290,11 +1295,10 @@ namespace LightShaft.Scripts
                 videoInfos.Reverse();
                 //Get the high quality video
 
-
                 foreach (VideoInfo info in videoInfos)
                 {
                     VideoType t = (videoFormat == VideoFormatType.MP4) ? VideoType.Mp4 : VideoType.WebM;
-
+                    
                     if (info.VideoType == t && info.Resolution == (quality))
                     {
                         if (debug) Debug.Log(quality);
@@ -1444,7 +1448,6 @@ namespace LightShaft.Scripts
                             }
                             else
                             {
-                                if (debug) Debug.Log(info.DownloadUrl);
                                 _temporaryVideo = info.DownloadUrl;
 
                                 if (decryptionNeeded)
@@ -1731,8 +1734,11 @@ namespace LightShaft.Scripts
             waitAudioSeek = true;
             if (is360 || videoPlayer.targetTexture != null)
             {
-                videoPlayer.targetTexture.width = (int)videoPlayer.width;
-                videoPlayer.targetTexture.height = (int)videoPlayer.height;
+                if(videoPlayer.renderMode == VideoRenderMode.RenderTexture)
+                {
+                    videoPlayer.targetTexture.width = (int)videoPlayer.width;
+                    videoPlayer.targetTexture.height = (int)videoPlayer.height;
+                }
             }
 
 
@@ -3288,8 +3294,8 @@ namespace LightShaft.Scripts
                         Debug.Log(Application.persistentDataPath);
                         //string filePath = Application.persistentDataPath + "/log_download_exception_" + DateTime.Now.ToString("ddMMyyyyhhmmssffff") + ".txt";
                         //Debug.Log("DownloadUrl content saved to " + filePath);
-                        if (Application.isEditor && debug)
-                            WriteLog("log_download_exception", "jsonForHtml: " + jsonForHtmlVersion);
+                        //if (Application.isEditor && debug)
+                        //    WriteLog("log_download_exception", "jsonForHtml: " + jsonForHtmlVersion);
                         //File.WriteAllText(filePath, downloadUrlResponse.data);
                         Debug.Log("retry!");
                         if (player != null)
@@ -3345,8 +3351,8 @@ namespace LightShaft.Scripts
             List<string> ciphers = new List<string>();
             JObject newJson = json;
 
-
-            WriteLog("test", newJson.ToString());
+            //if (Application.isEditor)
+            //    WriteLog("test", newJson.ToString());
             if (newJson["streamingData"]["formats"][0]["cipher"] != null)
             {
                 foreach (var j in newJson["streamingData"]["formats"])

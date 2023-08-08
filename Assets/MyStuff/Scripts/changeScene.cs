@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.XR.Management;
 public class changeScene : MonoBehaviour
 {
-
+    private floorceilingmove floorceilingmove;
     public bool mousehover = false;
     public bool toForms;
     public float counter = 0;
@@ -23,12 +23,13 @@ public class changeScene : MonoBehaviour
             {
                 mousehover = false;
                 counter = 0;
+
                 // name of scene which you want to load
                 //      Debug.Log("should be switching" + Switchscenename);
 
-             //   if (toForms)
-            //    { 
-                    StopXR();
+                //   if (toForms)
+                //    { 
+                StopXR();
             //    }
                 
                 SceneManager.LoadScene(Switchscenename);
@@ -40,7 +41,9 @@ public class changeScene : MonoBehaviour
     // mouse Enter event
     public void MouseHoverChangeScene(string Scenename)
     {
-    //    Debug.Log("setting scenename");
+        floorceilingmove = FindObjectOfType<floorceilingmove>();
+        floorceilingmove.stopTheCamera();
+        //    Debug.Log("setting scenename");
         Switchscenename = Scenename;
         mousehover = true;
     }

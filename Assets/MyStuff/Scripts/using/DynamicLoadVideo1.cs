@@ -61,7 +61,7 @@ public class DynamicLoadVideo1 : MonoBehaviour
                 counter = 0;
                 PlayerPrefs.SetString("nextscene", nextScene);
                 PlayerPrefs.SetString("returntoscene", returnScene);
-                PlayerPrefs.SetInt("stage", stage);
+                PlayerPrefs.SetInt("stageSmoking", stage);
                 PlayerPrefs.SetString("behaviour", behaviour);
 
                 if (JCMultiplier >= 4.5)

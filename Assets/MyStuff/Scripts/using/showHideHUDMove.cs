@@ -23,20 +23,7 @@ public class showHideHUDMove : MonoBehaviour
     //  public GameObject hud;
     private bool turnon = true;
     public GameObject hudZones;
-    //public SpriteRenderer spriteRenderer;
-    //public Sprite newSprite;
-    //public Sprite oldSprite;
-    //void ChangeSprite(bool state)
-    //{
-    //    if (state)
-    //    {
-    //        spriteRenderer.sprite = newSprite;
-    //    }
-    //    else
-    //    {
-    //        spriteRenderer.sprite = oldSprite;
-    //    }
-    //}
+
 
     void Update()
     {
@@ -44,11 +31,12 @@ public class showHideHUDMove : MonoBehaviour
         if (mousehover)
         {
 
-
+            Debug.Log("turnon 1" + turnon);
             Counter += Time.deltaTime;
 
             if (Counter >= delay)
             {
+                Debug.Log("turnon 2" + turnon);
                 mousehover = false;
                 Counter = 0;
                 if (turnon)

@@ -63,7 +63,22 @@ public class ToggleShowHideVideohospital : MonoBehaviour
                 else    if (VideoUrlLink != "")
                 {
                     PlayerPrefs.SetString("VideoUrl", VideoUrlLink);
-                    PlayerPrefs.SetInt("stage", stage);
+                    if (behaviour == "smoking")
+                    {
+                        PlayerPrefs.SetInt("stageSmoking", stage);
+                    }
+                   else if (behaviour == "alcohol")
+                    {
+                        PlayerPrefs.SetInt("stageAlcohol", stage);
+                    }
+                    if (behaviour == "heights")
+                    {
+                        PlayerPrefs.SetInt("stageHeights", stage);
+                    }
+                    if (behaviour == "sharks")
+                    {
+                        PlayerPrefs.SetInt("stageSharks", stage);
+                    }
                     PlayerPrefs.SetString("nextscene", nextscene);
                     PlayerPrefs.SetString("returntoscene", returnScene);
                       PlayerPrefs.SetString("behaviour", behaviour);

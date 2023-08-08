@@ -92,8 +92,7 @@ public class showhide3d : MonoBehaviour
     Vector3 m_EulerAngleVelocity;
 
     public GameObject hud;
-   
-    // public GameObject zones;
+
     private void Start()
     {
         //Player.useGravity = true;
@@ -110,17 +109,13 @@ public class showhide3d : MonoBehaviour
     ///     /// </summary>
     public void ResetScene()
     {
-       // zones.SetActive(false);
-            
-       //     Debug.Log("^^^ resetscene");
         trainingDone = PlayerPrefs.GetInt("trainingDone");
         toggler = false;
         Player = GameObject.Find("Player").GetComponent<Rigidbody>();
-      //  Debug.Log("kkk0 stopFilm value at start" + PlayerPrefs.GetInt("stopFilm"));
-        //    quick exit if going back to reception
+
              if (trainingDone == 0)
             {
-      //      Debug.Log("^^^ trainingDone 0");
+
             Player.transform.position = targetStartReception.transform.position;
             Player.transform.SetParent(targetStartReception.transform);
             toggler = true;
@@ -130,9 +125,6 @@ public class showhide3d : MonoBehaviour
         //otherwise run script
         else if (trainingDone == 1)
         {
-      //      Debug.Log("^^^ trainingDone 1");
-
-      //      Debug.Log("rrr1 into the whereto");
             whereto();
         }
     
@@ -141,8 +133,6 @@ public class showhide3d : MonoBehaviour
 
         private void whereto()
     {
-      //  Debug.Log("^^^ whereto");
-
         //get player prefs and assign to variables
         returntoscene = PlayerPrefs.GetString("returntoscene");
         stage = PlayerPrefs.GetInt("stage");
@@ -150,74 +140,47 @@ public class showhide3d : MonoBehaviour
         nextscene = PlayerPrefs.GetString("nextscene");
         trainingDone = PlayerPrefs.GetInt("trainingDone");
         stopFilm = PlayerPrefs.GetInt("stopFilm");
-        //  behaviour = PlayerPrefs.GetString("behaviour");
-        //   behaviour = PlayerPrefs.GetString("behaviour");
-  //      Debug.Log("ppp what is trainingDone " + trainingDone);
-  //      Debug.Log("ppp top what is behaviour " + behaviour);
-  //      Debug.Log("ppp top what is nextscene " + nextscene);
-   //     Debug.Log("ppp top what is returntoscene " + returntoscene);
+
 
         {
             //if we have no behaviour set and we aren't launching a film or going to the tips or intercepting the films
             // i.e. this is the default behaviour going to activity centre
-            if ((behaviour == "") && (nextscene !="film") && (nextscene != "tip") && (!PlayerPrefs.HasKey("stopFilm")) && (trainingDone == 1))
 
+            if ((nextscene == "home") || (((behaviour == "") && (nextscene != "film") && (nextscene != "tip") && (!PlayerPrefs.HasKey("stopFilm")) && (trainingDone == 1))))
             {
                 notFilms.SetActive(true);
                 hud.SetActive(true);
-             //   Debug.Log("kkk1 in quick exit act" + nextscene);
                 Player.transform.position = targetactivityCentre.transform.position;
                 Player.transform.SetParent(targetactivityCentre.transform);
-    //            Debug.Log("^^^ to activity centre");
             }
-
-
-            //start checking for future scenes and return scenes
-            //there is a next scene
-
-
             else
             {
-    //            Debug.Log("kkk2 goToNextScene");
-     //           Debug.Log("^^^ proceed to nextscene fn");
                 goToNextScene();
             }
-            //goToNextScene();
         }
     }
 
     private void goToNextScene()
-
     {
      //   Debug.Log("lll next scene is: " + nextscene);
          if (PlayerPrefs.HasKey("stopFilm"))
-        {
-      //      Debug.Log("film intercept kkk3" + PlayerPrefs.GetInt("stopFilm"));
-       //     Debug.Log("^^^ stopfilm");
+         {
             stopTheFilm();
-           
-        }
+         }
        
         else if (nextscene == "sectors")
         {
-       //     Debug.Log("^^^ sectors");
             goToSectors();
 
         }
         else if (nextscene == "hospital")
         {
-       //     Debug.Log("^^^ hospital");
             runVR();
-       //   Debug.Log("kkk4 go to nextscene hospital");
-
-        }
+       }
 
         else if (nextscene == "phobia" )
         {
-       //     Debug.Log("^^^ phobias");
-       //     Debug.Log("kkk5 in returntoscene phobia go to function");
             gotophobias();
-
         }
 
         else if (nextscene == "film")
@@ -225,63 +188,7 @@ public class showhide3d : MonoBehaviour
             // SceneManager.LoadScene("videoplayer");
             //   SceneManager.LoadScene("videoplayer", LoadSceneMode.Additive);
             SceneManager.LoadScene("videoplayer");
-            //    Debug.Log("^^^ films");
-            //    notFilms.SetActive(false);
-            //    terrain.SetActive(false);
-            //    //////////////////////
-            //    ///when switching to alt scene as pp not working with videoplayer
-            //    //   SceneManager.LoadScene("filmplayer");
-            //    //   PlayerPrefs.DeleteKey("nextscene");
-            //    ///////////////////////////
-
-            //    //4.0.1 change to load different scene
-
-            //    Debug.Log("kkk6 playing film");
-            //    Player.useGravity = false;
-            //    films.SetActive(true);
-            //    hud.SetActive(false);
-            //    Player.transform.position = targetfilm.transform.position;
-            //    Player.transform.SetParent(targetfilm.transform);
-            //    mainCamera.transform.rotation= Quaternion.Euler(-51, 15, -96);
-
-            //    ///////////
-            //    /// before trying to fix tips not working
-            //    /// 
-            //    /// PlayerPrefs.DeleteKey("returntoscene");
-            //    /// PlayerPrefs.SetString("nextscene", returntoscene);
-            //    ////////////
-
-            //    PlayerPrefs.SetString("nextscene", "tip");
-            //    Debug.Log("ppp mid what is behaviour " + behaviour);
-            //    Debug.Log("ppp mid what is nextscene " + nextscene);
-            //    Debug.Log("ppp mid what is returntoscene " + returntoscene);
-
-            //    Debug.Log("hh14 Request a new video play");
-            //    videocontrollerff = FindObjectOfType<videocontrollerff>();
-            //    videocontrollerff.RequestYoutubeStart();
-
-
         }
-
-        //else if (nextscene == "tip")
-        //{
-        //    Debug.Log("kkk7 in tip");
-        //    notFilms.SetActive(false);
-        //    terrain.SetActive(false);
-        //  //  films.SetActive(false);
-        //    Player.useGravity = false;
-        //    section_tip.SetActive(true);
-        //    PlayerPrefs.SetString("nextscene", returntoscene);
-        //    PlayerPrefs.DeleteKey("returntoscene");
-        //    Debug.Log("^^^ tips");
-
-        //    hud.SetActive(false);
-
-        //    Player.transform.position = targettip.transform.position;
-        //    Player.transform.SetParent(targettip.transform);
-        //    //return;
-        //}
-
         else if (nextscene == "register")
         {
       //      Debug.Log("kkk8 register"); 
@@ -321,176 +228,169 @@ public class showhide3d : MonoBehaviour
         goToBehaviourChange();
     }
 
-         
+
     public void goToBehaviourChange()
     {
-     //       Debug.Log("kkk12 in hospital function");
-      //  Debug.Log("^^^ behaviour change");
+        //       Debug.Log("kkk12 in hospital function");
+        //  Debug.Log("^^^ behaviour change");
         terrain.SetActive(true);
-        if (behaviour == "alcohol")
-
+        switch (behaviour)
         {
-     //       Debug.Log("^^^ alcohol");
-            if (stage == 0)
-            {
-                     
-                alcoholintro.SetActive(true);
-                alcoholfollow.SetActive(false);
-                alcoholsolution.SetActive(false);
-                alcoholfinish.SetActive(false);
-                Player.transform.position = targetalcohol1.transform.position;
-                Player.transform.SetParent(targetalcohol1.transform);
-      //          Debug.Log("kkk13 in alcohol stage 0");
-       //         Debug.Log("^^^ alcohol0");
-            }
-      else if (stage == 1)
-            {
-       //         Debug.Log("kkk14 in alcohol stage 1");
-                alcoholintro.SetActive(false);
-                alcoholfollow.SetActive(true);
-                alcoholsolution.SetActive(false);
-                alcoholfinish.SetActive(false);
-
-                Player.transform.position = targetalcohol2.transform.position;
-                Player.transform.SetParent(targetalcohol2.transform);
-       //         Debug.Log("^^^ alcohol1");
-            }
-            else if (stage == 2)
-            {
-       //         Debug.Log("kkk15 in alcohol stage 2");
-                alcoholintro.SetActive(false);
-                alcoholfollow.SetActive(false);
-                alcoholsolution.SetActive(true);
-                alcoholfinish.SetActive(false);
-                Player.transform.position = targetalcohol3.transform.position;
-                Player.transform.SetParent(targetalcohol3.transform);
-         //       Debug.Log("^^^ alcohol2");
-            }
-
-            else if (stage == 3)
-            {
-        //        Debug.Log("kkk16 in alcohol stage 3");
-                alcoholintro.SetActive(false);
-                alcoholfollow.SetActive(false);
-                alcoholsolution.SetActive(false);
-                alcoholfinish.SetActive(true);
-        //        Debug.Log("^^^ alcohol3");
-
-                Player.transform.position = targetalcohol4.transform.position;
-                Player.transform.SetParent(targetalcohol4.transform);
-
-            }
-    
-        }
-        else if (behaviour == "smoking")
-        {
-      //      Debug.Log("^^^ smoking");
-            //    keyButtons.SetActive(true);
-            //Welcome to smoking
-            if (stage == 0)
-            {
-                
-        //        Debug.Log("^^^ smoking0");
-
-                welcomeSmoking.SetActive(true);
-                xrayResults.SetActive(false);
-                stopGoCtscan.SetActive(false);
-                CTresults.SetActive(false);
-                smokingDone.SetActive(false);
-                Player.transform.position = targetSmoking0.transform.position;
-                Player.transform.SetParent(targetSmoking0.transform);
-
-            }
-            //Get XRay Results
-            else if (stage == 1)
-            {
-         //       Debug.Log("^^^ smoking1");
-                welcomeSmoking.SetActive(false);
-                xrayResults.SetActive(true);
-                stopGoCtscan.SetActive(false);
-                CTresults.SetActive(false);
-                smokingDone.SetActive(false);
-                Player.transform.position = targetSmoking0.transform.position;
-                Player.transform.SetParent(targetSmoking0.transform);
-
-
-            }
-
-            //book CT Scan and go for scan when allowed
-            else if (stage == 2)
-            {
-        //        Debug.Log("^^^ smoking2");
-                welcomeSmoking.SetActive(false);
-                xrayResults.SetActive(false);
-                stopGoCtscan.SetActive(true);
-                CTresults.SetActive(false);
-                smokingDone.SetActive(false);
-
-                setCTdate = FindObjectOfType<setCTdate>();
-                setCTdate.setReferenceDate();
-
-                if (PlayerPrefs.GetInt("delaynotification") > 0)
+            case "alcohol":
+                stage = PlayerPrefs.GetInt("stageAlcohol");
+                if (stage == 0)
                 {
-        //            Debug.Log("^^^ smoking2 wait for CT");
-                    xrayResults.SetActive(false);
-                    stopGoCtscan.SetActive(true);
-                    preReadyCT.SetActive(true);
-                     Player.transform.position = targetSmoking0.transform.position;
-                    Player.transform.SetParent(targetSmoking0.transform);
+
+                    alcoholintro.SetActive(true);
+                    alcoholfollow.SetActive(false);
+                    alcoholsolution.SetActive(false);
+                    alcoholfinish.SetActive(false);
+                    Player.transform.position = targetalcohol1.transform.position;
+                    Player.transform.SetParent(targetalcohol1.transform);
+                    //          Debug.Log("kkk13 in alcohol stage 0");
+                    //         Debug.Log("^^^ alcohol0");
                 }
-                else
+                else if (stage == 1)
                 {
-          //          Debug.Log("^^^ smoking2 ready for CT");
+                    //         Debug.Log("kkk14 in alcohol stage 1");
+                    alcoholintro.SetActive(false);
+                    alcoholfollow.SetActive(true);
+                    alcoholsolution.SetActive(false);
+                    alcoholfinish.SetActive(false);
 
-                    readyCT.SetActive(true);
-                    xrayResults.SetActive(false);
-                    stopGoCtscan.SetActive(true);      
-                    Player.transform.position = targetSmoking0.transform.position;
-                    Player.transform.SetParent(targetSmoking0.transform);
-
+                    Player.transform.position = targetalcohol2.transform.position;
+                    Player.transform.SetParent(targetalcohol2.transform);
+                    //         Debug.Log("^^^ alcohol1");
                 }
-               
-            }
+                else if (stage == 2)
+                {
+                    //         Debug.Log("kkk15 in alcohol stage 2");
+                    alcoholintro.SetActive(false);
+                    alcoholfollow.SetActive(false);
+                    alcoholsolution.SetActive(true);
+                    alcoholfinish.SetActive(false);
+                    Player.transform.position = targetalcohol3.transform.position;
+                    Player.transform.SetParent(targetalcohol3.transform);
+                    //       Debug.Log("^^^ alcohol2");
+                }
+                else if (stage == 3)
+                {
+                    //        Debug.Log("kkk16 in alcohol stage 3");
+                    alcoholintro.SetActive(false);
+                    alcoholfollow.SetActive(false);
+                    alcoholsolution.SetActive(false);
+                    alcoholfinish.SetActive(true);
+                    //        Debug.Log("^^^ alcohol3");
 
-            //    PlayerPrefs.DeleteKey("nextscene");
-            //     PlayerPrefs.DeleteKey("stage");
+                    Player.transform.position = targetalcohol4.transform.position;
+                    Player.transform.SetParent(targetalcohol4.transform);
+                }
+                break;
+
+            case "smoking":
+                    stage = PlayerPrefs.GetInt("stageSmoking");
+                    //      Debug.Log("^^^ smoking");
+                    //    keyButtons.SetActive(true);
+                    //Welcome to smoking
+                    if (stage == 0)
+                    {
+
+                        //        Debug.Log("^^^ smoking0");
+
+                        welcomeSmoking.SetActive(true);
+                        xrayResults.SetActive(false);
+                        stopGoCtscan.SetActive(false);
+                        CTresults.SetActive(false);
+                        smokingDone.SetActive(false);
+                        Player.transform.position = targetSmoking0.transform.position;
+                        Player.transform.SetParent(targetSmoking0.transform);
+                    }
+                    //Get XRay Results
+                    else if (stage == 1)
+                    {
+                        //       Debug.Log("^^^ smoking1");
+                        welcomeSmoking.SetActive(false);
+                        xrayResults.SetActive(true);
+                        stopGoCtscan.SetActive(false);
+                        CTresults.SetActive(false);
+                        smokingDone.SetActive(false);
+                        Player.transform.position = targetSmoking0.transform.position;
+                        Player.transform.SetParent(targetSmoking0.transform);
+                    }
+
+                    //book CT Scan and go for scan when allowed
+                    else if (stage == 2)
+                    {
+                        //        Debug.Log("^^^ smoking2");
+                        welcomeSmoking.SetActive(false);
+                        xrayResults.SetActive(false);
+                        stopGoCtscan.SetActive(true);
+                        CTresults.SetActive(false);
+                        smokingDone.SetActive(false);
+
+                        setCTdate = FindObjectOfType<setCTdate>();
+                        setCTdate.setReferenceDate();
+
+                        if (PlayerPrefs.GetInt("delaynotification") > 0)
+                        {
+                            //            Debug.Log("^^^ smoking2 wait for CT");
+                            xrayResults.SetActive(false);
+                            stopGoCtscan.SetActive(true);
+                            preReadyCT.SetActive(true);
+                            Player.transform.position = targetSmoking0.transform.position;
+                            Player.transform.SetParent(targetSmoking0.transform);
+                        }
+                        else
+                        {
+                            //          Debug.Log("^^^ smoking2 ready for CT");
+
+                            readyCT.SetActive(true);
+                            xrayResults.SetActive(false);
+                            stopGoCtscan.SetActive(true);
+                            Player.transform.position = targetSmoking0.transform.position;
+                            Player.transform.SetParent(targetSmoking0.transform);
+
+                        }
+
+                    }
+
+                    //    PlayerPrefs.DeleteKey("nextscene");
+                    //     PlayerPrefs.DeleteKey("stage");
 
 
-            // get CT scan results
-            else if (stage == 3)
-            {
-        //        Debug.Log("^^^ smoking3");
+                    // get CT scan results
+                    else if (stage == 3)
+                    {
+                        PlayerPrefs.DeleteKey("CTstartpoint");
+                        PlayerPrefs.DeleteKey("delaynotification");
 
-                PlayerPrefs.DeleteKey("CTstartpoint");
-                PlayerPrefs.DeleteKey("delaynotification");
-               
-                welcomeSmoking.SetActive(false);
-                xrayResults.SetActive(false);
-                stopGoCtscan.SetActive(false);
-                CTresults.SetActive(true);
-                smokingDone.SetActive(false);
-                Player.transform.position = targetSmoking0.transform.position;
-                Player.transform.SetParent(targetSmoking0.transform);
-                PlayerPrefs.DeleteKey("delaynotification");
-                PlayerPrefs.DeleteKey("CTstartpoint");
-            }
+                        welcomeSmoking.SetActive(false);
+                        xrayResults.SetActive(false);
+                        stopGoCtscan.SetActive(false);
+                        CTresults.SetActive(true);
+                        smokingDone.SetActive(false);
+                        Player.transform.position = targetSmoking0.transform.position;
+                        Player.transform.SetParent(targetSmoking0.transform);
+                        PlayerPrefs.DeleteKey("delaynotification");
+                        PlayerPrefs.DeleteKey("CTstartpoint");
+                    }
 
-            else if (stage == 4)
-            {
-       //         Debug.Log("^^^ smoking4");
+                    else if (stage == 4)
+                    {
+                        //         Debug.Log("^^^ smoking4");
 
-                welcomeSmoking.SetActive(false);
-                xrayResults.SetActive(false);
-                stopGoCtscan.SetActive(false);
-                CTresults.SetActive(false);
-                smokingDone.SetActive(true);
-                Player.transform.position = targetSmoking0.transform.position;
-                Player.transform.SetParent(targetSmoking0.transform);
-
-            }
-           
+                        welcomeSmoking.SetActive(false);
+                        xrayResults.SetActive(false);
+                        stopGoCtscan.SetActive(false);
+                        CTresults.SetActive(false);
+                        smokingDone.SetActive(true);
+                        Player.transform.position = targetSmoking0.transform.position;
+                        Player.transform.SetParent(targetSmoking0.transform);
+                    }
+                    break;
+                }
         }
-}
+
 
     public void goToSectors()
     {
@@ -553,40 +453,49 @@ public class showhide3d : MonoBehaviour
         hud.SetActive(true);
         terrain.SetActive(true);
         //just uncommented; maybe recomment
+
+
         stage = PlayerPrefs.GetInt("stage");
-       
-         if (behaviour == "heights")
+
+        switch (behaviour)
         {
-         //   Debug.Log("^^^ heights top");
-            if (stage == 1)
-            {
-        //        Debug.Log("^^^ heights 1");
+            case "heights":
 
-                Player.transform.position = targetPhobias1.transform.position;
-                Player.transform.SetParent(targetPhobias1.transform);
+                stage = PlayerPrefs.GetInt("stageHeights");
+
+                //   Debug.Log("^^^ heights top");
+                if (stage == 1)
+                {
+                    //        Debug.Log("^^^ heights 1");
+
+                    Player.transform.position = targetPhobias1.transform.position;
+                    Player.transform.SetParent(targetPhobias1.transform);
 
 
-            }
-            else if (stage == 2)
-            {
-        //        Debug.Log("^^^ heights 2");
-                Player.transform.position = targetPhobias2.transform.position;
-                Player.transform.SetParent(targetPhobias2.transform);
+                }
+                else if (stage == 2)
+                {
+                    //        Debug.Log("^^^ heights 2");
+                    Player.transform.position = targetPhobias2.transform.position;
+                    Player.transform.SetParent(targetPhobias2.transform);
 
-            }
-            else if (stage == 3)
-            {
-       //         Debug.Log("^^^ heights 3");
-                Player.transform.position = targetPhobias3.transform.position;
-                Player.transform.SetParent(targetPhobias3.transform);
-            }
-        }
+                }
+                else if (stage == 3)
+                {
+                    //         Debug.Log("^^^ heights 3");
+                    Player.transform.position = targetPhobias3.transform.position;
+                    Player.transform.SetParent(targetPhobias3.transform);
+                }
+                break;
 
-        else if (behaviour == "sharks")
-        {
-         //   Debug.Log("^^^ sharks");
-            Player.transform.position = targetSharks.transform.position;
-            Player.transform.SetParent(targetSharks.transform);
+            case "sharks":
+
+                stage = PlayerPrefs.GetInt("stageSharks");
+
+                //   Debug.Log("^^^ sharks");
+                Player.transform.position = targetSharks.transform.position;
+                Player.transform.SetParent(targetSharks.transform);
+                break;
         }
 
         PlayerPrefs.DeleteKey("nextscene");

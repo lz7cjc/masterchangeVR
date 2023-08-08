@@ -46,28 +46,7 @@ public class showHideHUD : MonoBehaviour
             {
                 mousehover = false;
                 Counter = 0;
-                if (!showing)
-                {
-             
-                    Debug.Log("show + primary only");
-                    hudprimary.SetActive(true);
-                    turnHudOff.SetActive(true);
-                    turnHudOn.SetActive(false);
-                    showing = true;
-                }
-                else
-                {
-                    //hide primary hud and change to a +
-                 
-                    hudprimary.SetActive(false);
-                    turnHudOff.SetActive(false);
-                    turnHudOn.SetActive(true);
-                    hudZones.SetActive(false);
-                    hudMove.SetActive(false);
-
-
-                    showing = false;
-                }
+                directClick();
             }
         }
     }
@@ -88,6 +67,31 @@ public class showHideHUD : MonoBehaviour
         Counter = 0;
     }
 
+    public void directClick()
+    {
+        if (!showing)
+        {
+
+            Debug.Log("show + primary only");
+            hudprimary.SetActive(true);
+            turnHudOff.SetActive(true);
+            turnHudOn.SetActive(false);
+            showing = true;
+        }
+        else
+        {
+            //hide primary hud and change to a +
+
+            hudprimary.SetActive(false);
+            turnHudOff.SetActive(false);
+            turnHudOn.SetActive(true);
+            hudZones.SetActive(false);
+            hudMove.SetActive(false);
+
+
+            showing = false;
+        }
+    }    
  
     
 }

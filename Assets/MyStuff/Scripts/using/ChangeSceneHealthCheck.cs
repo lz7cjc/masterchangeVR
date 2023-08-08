@@ -73,8 +73,11 @@ public class ChangeSceneHealthCheck : MonoBehaviour
                 PlayerPrefs.SetString("behaviour", behaviour);
                 behaviour = PlayerPrefs.GetString("behaviour");
                 PlayerPrefs.SetString("returntoscene", "hospital");
-               //needed to go back a step, does this screw up normal operation?
-                PlayerPrefs.SetInt("stage", stage);
+                //needed to go back a step, does this screw up normal operation?
+                if (!PlayerPrefs.HasKey("stage"))
+                { 
+                    PlayerPrefs.SetInt("stage", stage);
+                }
                 mousehover = false;
                 counter = 0;
                 // name of scene which you want to load
@@ -82,12 +85,12 @@ public class ChangeSceneHealthCheck : MonoBehaviour
                 if ((!form) && (!PlayerPrefs.HasKey("stopFilm")))
                 {
                     Debug.Log("55555 in !form");
-                 
+                  Debug.Log("Stage from PP" + PlayerPrefs.GetInt("stage"));
                       if (!PlayerPrefs.HasKey("stage") && (behaviour == "smoking"))
                     {
                         PlayerPrefs.SetInt("stage", stage);
                     }
-                    Debug.Log("Stage from PP" + PlayerPrefs.GetInt("stage"));
+                   
 
                     PlayerPrefs.SetString("nextscene", "hospital");
                     //    hospital.SetActive(true);

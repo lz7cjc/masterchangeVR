@@ -26,7 +26,7 @@ public class showfilm : MonoBehaviour
    // public GameObject Panel;
 
     public TMP_Text videoTime;
-    private LightShaft.Scripts.YoutubePlayer youtubePlayer;
+    public LightShaft.Scripts.YoutubePlayer youtubePlayer;
     private string videoURLPP;
     private string returntoscene;
     public GameObject mainCamera;
@@ -36,10 +36,10 @@ public class showfilm : MonoBehaviour
     {
         //Player.useGravity = true;
         Debug.Log("^^^ start");
-        playfilm();
+        
         tipSection.SetActive(false);
         filmSection.SetActive(true);
-
+        playfilm();
     }
 
 

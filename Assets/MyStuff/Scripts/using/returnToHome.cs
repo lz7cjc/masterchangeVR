@@ -20,9 +20,10 @@ public class returnToHome : MonoBehaviour
     private int trainingDone;
     private floorceilingmove floorceilingmove;
 
-    public SpriteRenderer spriterenderer;
-    public Sprite spriteDefault;
-    public Sprite spriteSwitch;
+    //public SpriteRenderer spriterenderer;
+    //public Sprite spriteDefault;
+    //public Sprite spriteSwitch;
+    public string nextscene = "home";
 
     //////
     /// <summary>
@@ -38,11 +39,7 @@ public class returnToHome : MonoBehaviour
     private void Start()
     {
         trainingDone = PlayerPrefs.GetInt("trainingDone");
-    //    Debug.Log("eee button option1 : " + trainingDone);
-      //  Debug.Log("eee chooseOption : " + chooseOption);
-        //getStage = PlayerPrefs.GetInt("stage");
-        //behaviour = PlayerPrefs.GetString("behaviour");
-      //  Debug.Log("trainingDone: " + trainingDone);
+   
     }
 
     void Update()
@@ -63,7 +60,6 @@ public class returnToHome : MonoBehaviour
                     //return to start
                 {
                     PlayerPrefs.SetInt("trainingDone", 1);
-                 //   PlayerPrefs.SetInt("stage", 0);
                     PlayerPrefs.DeleteKey("CTStartPoint");
                     PlayerPrefs.DeleteKey("delaynotification");
                    
@@ -72,28 +68,52 @@ public class returnToHome : MonoBehaviour
                 //back one step
                 {
                     PlayerPrefs.SetInt("trainingDone", 1);
-                    getStage = PlayerPrefs.GetInt("stage");
-                    putStage = getStage - 1;
-                    PlayerPrefs.SetString("nextscene", "hospital");
-                    PlayerPrefs.SetInt("stage", putStage);
+
+                    switch (behaviour)
+                    {
+                        case "smoking":
+                            getStage = PlayerPrefs.GetInt("stageSmoking");
+                            putStage = getStage - 1;
+                            PlayerPrefs.SetString("nextscene", "hospital");
+                            PlayerPrefs.SetInt("stageSmoking", putStage);
+                            break;
+
+                        case "alcohol":
+                            getStage = PlayerPrefs.GetInt("stageAlcohol");
+                            putStage = getStage - 1;
+                            PlayerPrefs.SetString("nextscene", "hospital");
+                            PlayerPrefs.SetInt("stageAlcohol", putStage);
+                            break;
+
+                        case "heights":
+                            getStage = PlayerPrefs.GetInt("stageHeights");
+                            putStage = getStage - 1;
+                            PlayerPrefs.SetString("nextscene", "hospital");
+                            PlayerPrefs.SetInt("stageHeights", putStage);
+                            break;
+
+                        case "sharks":
+                            getStage = PlayerPrefs.GetInt("stageSharks");
+                            putStage = getStage - 1;
+                            PlayerPrefs.SetString("nextscene", "hospital");
+                            PlayerPrefs.SetInt("stageSharks", putStage);
+                            break;
+                    }
+                  
                 }
                 //go to activity centre and cancel behaviour
                 else if  (chooseOption == 3)
                 {
                     PlayerPrefs.SetInt("trainingDone", 1);
-                   // PlayerPrefs.DeleteKey("stage");
-                   // PlayerPrefs.DeleteKey("behaviour");
-                   // PlayerPrefs.DeleteKey("nextscene");
-                   // PlayerPrefs.DeleteKey("returntoscene");
+                    PlayerPrefs.SetString("nextscene", nextscene);
+                   
                 }
                 // go to reception
                 else if (chooseOption == 4)
                 {
                     PlayerPrefs.SetInt("trainingDone", 0);
-              //      PlayerPrefs.DeleteKey("stage");
-                //    PlayerPrefs.DeleteKey("behaviour");
-                  //  PlayerPrefs.DeleteKey("nextscene");
-                    //PlayerPrefs.DeleteKey("returntoscene");
+                    PlayerPrefs.SetString("nextscene", nextscene);
+                  
                 }
 
                
@@ -118,7 +138,7 @@ public class returnToHome : MonoBehaviour
         //   Debug.Log("setting walk");
         // Markername = ObjectName;
         mousehover = true;
-        spriterenderer.sprite = spriteSwitch;
+  //      spriterenderer.sprite = spriteSwitch;
     }
 
 
@@ -137,7 +157,7 @@ public class returnToHome : MonoBehaviour
         // Markername = "";
         mousehover = false;
         Counter = 0;
-        spriterenderer.sprite = spriteDefault;
+      //  spriterenderer.sprite = spriteDefault;
     }
     private void showandhide()
     {

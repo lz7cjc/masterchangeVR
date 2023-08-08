@@ -25,7 +25,7 @@ public class drinkoutcome : MonoBehaviour
 
     public void setFilm()
     {
-        PlayerPrefs.SetInt("stage", 3);
+        PlayerPrefs.SetInt("stageAlcohol", 3);
         string setCategory = PlayerPrefs.GetString("setCat");
         if (setCategory == "binge")
 
@@ -48,7 +48,7 @@ public class drinkoutcome : MonoBehaviour
         {
              PlayerPrefs.SetString("behaviour", "alcohol");
             PlayerPrefs.SetString("nextscene", "hospital");
-             PlayerPrefs.SetInt("stage", 3);
+             PlayerPrefs.SetInt("stageAlcohol", 3);
 
             showhide3d = FindObjectOfType<showhide3d>();
             showhide3d.ResetScene();
@@ -56,7 +56,7 @@ public class drinkoutcome : MonoBehaviour
         PlayerPrefs.SetString("returntoscene", "hospital");
         PlayerPrefs.SetString("behaviour", "alcohol");
         PlayerPrefs.SetString("nextscene", "film");
-        PlayerPrefs.SetInt("stage", 3);
+        PlayerPrefs.SetInt("stageAlcohol", 3);
 
         showhide3d = FindObjectOfType<showhide3d>();
         showhide3d.ResetScene();
