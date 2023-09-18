@@ -16,6 +16,7 @@ public class showfilm : MonoBehaviour
     public GameObject targettip;
     public GameObject tipSection;
     public GameObject filmSection;
+    public GameObject huds;
 
   //  private videocontrollerff videocontrollerff;
     public VideoPlayer VideoPlayer; // Drag & Drop the GameObject holding the VideoPlayer component
@@ -73,6 +74,7 @@ public class showfilm : MonoBehaviour
         Debug.Log("in for tip");
         tipSection.SetActive(true);
         filmSection.SetActive(false);
+        huds.SetActive(false);
         Player.useGravity = false;
         PlayerPrefs.SetString("nextscene", returntoscene);
         PlayerPrefs.DeleteKey("returntoscene");

@@ -31,7 +31,7 @@ public class averagetip : MonoBehaviour
 
         WWWForm form = new WWWForm();
         form.AddField("filmURL", filmURL);
-     // Debug.Log("filurl" + filmURL);
+      Debug.Log("filurl" + filmURL);
         UnityWebRequest www = UnityWebRequest.Post(posturl, form); // The file location for where my .php file is.
         yield return www.SendWebRequest();
         if (www.isNetworkError || www.isHttpError)

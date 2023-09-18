@@ -76,6 +76,11 @@ public class returnToHome : MonoBehaviour
                             putStage = getStage - 1;
                             PlayerPrefs.SetString("nextscene", "hospital");
                             PlayerPrefs.SetInt("stageSmoking", putStage);
+                            if (putStage == 2)
+                            {
+                               // PlayerPrefs.SetFloat("CTstartpoint");
+                                PlayerPrefs.SetFloat("delaynotification", -1);
+                            }
                             break;
 
                         case "alcohol":
@@ -159,7 +164,7 @@ public class returnToHome : MonoBehaviour
         Counter = 0;
       //  spriterenderer.sprite = spriteDefault;
     }
-    private void showandhide()
+    public void showandhide()
     {
      //   Debug.Log("calling showhide3d kkk");
         //    TargetObject.SetActive(true);

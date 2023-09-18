@@ -11,12 +11,16 @@ public class showHideHUD : MonoBehaviour
     public bool mousehover = false;
 
     public float Counter = 0;
+    public float waitFor;
     public bool showing = false;
    public GameObject hudprimary;
     public GameObject turnHudOn;
     public GameObject turnHudOff;
     public GameObject hudZones;
     public GameObject hudMove;
+    private string behaviour;
+    public GameObject showWalk;
+    
 
     public void Start()
     {
@@ -25,6 +29,9 @@ public class showHideHUD : MonoBehaviour
         hudMove.SetActive(false);
         turnHudOn.SetActive(true);
         turnHudOff.SetActive(false);
+        behaviour = PlayerPrefs.GetString("behaviour");
+        
+
     }
     
 
@@ -42,7 +49,7 @@ public class showHideHUD : MonoBehaviour
 
             Counter += Time.deltaTime;
 
-            if (Counter >= 3)
+            if (Counter >= waitFor)
             {
                 mousehover = false;
                 Counter = 0;
@@ -69,6 +76,8 @@ public class showHideHUD : MonoBehaviour
 
     public void directClick()
     {
+
+        
         if (!showing)
         {
 
@@ -76,7 +85,13 @@ public class showHideHUD : MonoBehaviour
             hudprimary.SetActive(true);
             turnHudOff.SetActive(true);
             turnHudOn.SetActive(false);
+            if (behaviour == "space")
+
+            {
+                showWalk.SetActive(false);
+            }
             showing = true;
+            
         }
         else
         {
