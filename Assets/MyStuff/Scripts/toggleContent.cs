@@ -17,6 +17,9 @@ public class toggleContent : MonoBehaviour
     public GameObject notloggedon;
     public GameObject loggedon;
     public Text earnRirosTxt;
+    public GameObject loginBtn;
+    public GameObject logoutBtn;
+
     
     void Start()
     {
@@ -32,14 +35,17 @@ public class toggleContent : MonoBehaviour
             loggedon.SetActive(true);
             notloggedon.SetActive(false);
             earnRirosTxt.text = "Earn Riros";
+            logoutBtn.SetActive(true);
+            loginBtn.SetActive(false);
 
-       
         }
         else
         {
             notloggedon.SetActive(true);
             loggedon.SetActive(false);
             earnRirosTxt.text = "Register";
+            loginBtn.SetActive(true);
+            logoutBtn.SetActive(false);
 
             //use playerprefs for riro amounts - these already exist (or not) so don't need to do anything
         }

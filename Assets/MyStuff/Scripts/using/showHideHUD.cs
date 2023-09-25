@@ -19,8 +19,8 @@ public class showHideHUD : MonoBehaviour
     public GameObject hudZones;
     public GameObject hudMove;
     private string behaviour;
-    public GameObject showWalk;
-    
+   
+
 
     public void Start()
     {
@@ -85,11 +85,7 @@ public class showHideHUD : MonoBehaviour
             hudprimary.SetActive(true);
             turnHudOff.SetActive(true);
             turnHudOn.SetActive(false);
-            if (behaviour == "space")
-
-            {
-                showWalk.SetActive(false);
-            }
+            
             showing = true;
             
         }

@@ -21,7 +21,8 @@ public class MoveCamera : MonoBehaviour
     public string nextscene;
     public GameObject section;
     private bool tempStop;
-   // private showHideHUD showHideHUD;
+    private closeAllHuds closeAllHuds;
+    private string nextBehaviour;
 
     //  private bool tempStart;
 
@@ -77,13 +78,21 @@ public class MoveCamera : MonoBehaviour
 
     private void showandhide()
     {
+
         Debug.Log("picked it up 2");
         player.useGravity = gravity;
+        nextBehaviour = section.name.ToLower();
+        Debug.Log("next behaviour is:" + nextBehaviour + "raw is" + section.name);
+        PlayerPrefs.SetString("behaviour", nextBehaviour);
+        closeAllHuds = FindObjectOfType<closeAllHuds>();
+        closeAllHuds.CloseTheHuds();
         player.transform.position = cameratarget.transform.position;
         player.transform.SetParent(cameratarget.transform);
 
         //player.MovePosition(cameratarget.transform.position);
         //player.transform.SetParent(cameratarget.transform);
+
+
         getfav = FindObjectOfType<getfav>();
         getfav.favReset();
 

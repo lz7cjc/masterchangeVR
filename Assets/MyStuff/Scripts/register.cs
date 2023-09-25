@@ -60,10 +60,10 @@ public class register : MonoBehaviour
         prerirosBalance = PlayerPrefs.GetInt("rirosBalance");
         returnToScene = PlayerPrefs.GetString("returntoscene");
 
-        usernameField.text = "ff88fgdafh";
-        passwordField.text = "34534535dg";
-        dob.text = "1934";
-        email.text = "nik@beriro.co.uk";
+        //usernameField.text = "ff88fgdafh";
+        //passwordField.text = "34534535dg";
+        //dob.text = "1934";
+        //email.text = "nik@beriro.co.uk";
 
         Debug.Log("iii behaviour and return to scene: " + behaviour + returnToScene);
 #if UNITY_ANDROID
