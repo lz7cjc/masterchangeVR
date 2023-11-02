@@ -57,6 +57,8 @@ public class videocontrollerff : MonoBehaviour
     public Sprite spriteRewind30s;
     public Sprite spriteHoverRewind30s;
 
+    public GameObject launchHuds;
+    public GameObject huds;
     public void Start()
     {
 
@@ -76,7 +78,8 @@ public class videocontrollerff : MonoBehaviour
 
             var vTFormat = TimeSpan.FromSeconds(VideoPlayer.time);
             videoTime.text = string.Format("{0:00}:{1:00}", vTFormat.TotalMinutes, vTFormat.Seconds) + "/" + string.Format("{0:00}:{1:00}", tFFormat.TotalMinutes, tFFormat.Seconds); ;
-
+            launchHuds.SetActive(true);
+            huds.SetActive(true);
 
 
         }

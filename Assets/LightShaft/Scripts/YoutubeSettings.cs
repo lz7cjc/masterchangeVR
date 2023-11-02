@@ -274,7 +274,7 @@ namespace LightShaft.Scripts
         private bool alreadyGotUrls = false;
 
         //When the system stops to play try to use the backup system.
-        private bool BACKUPSYSTEM = false;
+        private bool BACKUPSYSTEM = true;
         IEnumerator YoutubeGenerateUrlUsingClient(string _videoUrl, string _formatCode)
         {
 

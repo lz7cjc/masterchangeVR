@@ -12,7 +12,7 @@ public class rirofromprefs : MonoBehaviour
     {
 
 ;
-        riros.text = PlayerPrefs.GetInt("rirosBalance").ToString();
+        riros.text = "R$" + PlayerPrefs.GetInt("rirosBalance").ToString();
 
     }
 }

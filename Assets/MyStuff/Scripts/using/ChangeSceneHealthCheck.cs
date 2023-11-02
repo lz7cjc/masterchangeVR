@@ -69,28 +69,47 @@ public class ChangeSceneHealthCheck : MonoBehaviour
             counter += Time.deltaTime;
             if (counter >= 3)
             {
-                Debug.Log("ttt in mousehover");
+                Debug.Log("ttt in mousehover" + stage);
                 PlayerPrefs.SetString("behaviour", behaviour);
                 behaviour = PlayerPrefs.GetString("behaviour");
                 PlayerPrefs.SetString("returntoscene", "hospital");
                 //needed to go back a step, does this screw up normal operation?
-                if (!PlayerPrefs.HasKey("stage"))
+                if (behaviour == "smoking")
+                {
+
+                
+                if (!PlayerPrefs.HasKey("stageSmoking"))
                 { 
-                    PlayerPrefs.SetInt("stage", stage);
+                    PlayerPrefs.SetInt("stageSmoking", stage);
                 }
                 mousehover = false;
                 counter = 0;
-                // name of scene which you want to load
+                    // name of scene which you want to load
+                }
+               else if (behaviour == "alcohol")
+                {
 
+
+                    if (!PlayerPrefs.HasKey("stageAlcohol"))
+                    {
+                        PlayerPrefs.SetInt("stageAlcohol", stage);
+                    }
+                    mousehover = false;
+                    counter = 0;
+                    // name of scene which you want to load
+                }
                 if ((!form) && (!PlayerPrefs.HasKey("stopFilm")))
                 {
                     Debug.Log("55555 in !form");
                   Debug.Log("Stage from PP" + PlayerPrefs.GetInt("stage"));
                       if (!PlayerPrefs.HasKey("stage") && (behaviour == "smoking"))
                     {
-                        PlayerPrefs.SetInt("stage", stage);
+                        PlayerPrefs.SetInt("stageSmoking", stage);
                     }
-                   
+                    else if (!PlayerPrefs.HasKey("stageAlcohol") && (behaviour == "alcohol"))
+                    {
+                        PlayerPrefs.SetInt("stageAlcohol", stage);
+                    }
 
                     PlayerPrefs.SetString("nextscene", "hospital");
                     //    hospital.SetActive(true);

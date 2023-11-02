@@ -17,8 +17,12 @@ public class showfilm : MonoBehaviour
     public GameObject tipSection;
     public GameObject filmSection;
     public GameObject huds;
+    public GameObject videoControls1;
+    public GameObject videoControls2;
+    public GameObject videoControls3;
+    public GameObject videoControls4;
 
-  //  private videocontrollerff videocontrollerff;
+    //  private videocontrollerff videocontrollerff;
     public VideoPlayer VideoPlayer; // Drag & Drop the GameObject holding the VideoPlayer component
                                     //public string SceneName;
     public VideoPlayer audioPlayer;
@@ -31,7 +35,8 @@ public class showfilm : MonoBehaviour
     private string videoURLPP;
     private string returntoscene;
     public GameObject mainCamera;
- 
+ public GameObject launchHuds;
+    public GameObject tipsHud;
 
     private void Start()
     {
@@ -40,6 +45,9 @@ public class showfilm : MonoBehaviour
         
         tipSection.SetActive(false);
         filmSection.SetActive(true);
+        tipsHud.SetActive(false);
+        launchHuds.SetActive(false);
+        huds.SetActive(false);
         playfilm();
     }
 
@@ -75,6 +83,12 @@ public class showfilm : MonoBehaviour
         tipSection.SetActive(true);
         filmSection.SetActive(false);
         huds.SetActive(false);
+        tipsHud.SetActive(true);
+        launchHuds.SetActive(false);
+        //videoControls1.SetActive(false);
+        //videoControls2.SetActive(false);
+        //videoControls3.SetActive(false);
+        //videoControls4.SetActive(false);
         Player.useGravity = false;
         PlayerPrefs.SetString("nextscene", returntoscene);
         PlayerPrefs.DeleteKey("returntoscene");

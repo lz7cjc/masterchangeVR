@@ -30,7 +30,16 @@ public class cleanTP : MonoBehaviour
             {
                 mousehover = false;
                 Counter = 0;
-
+                if (PlayerPrefs.GetString("behaviour") == "smoking")
+                {
+                    PlayerPrefs.DeleteKey("behaviour");
+                    PlayerPrefs.DeleteKey("stageSmoking");
+                }
+                if (PlayerPrefs.GetString("behaviour") == "alcohol")
+                {
+                    PlayerPrefs.DeleteKey("behaviour");
+                    PlayerPrefs.DeleteKey("stageAlcohol");
+                }
                 showandhide();
 
             }

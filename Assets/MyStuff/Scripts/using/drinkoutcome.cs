@@ -30,12 +30,12 @@ public class drinkoutcome : MonoBehaviour
         if (setCategory == "binge")
 
         {
-            PlayerPrefs.SetString("VideoUrl", "https://youtu.be/FJ7bKoJmaek");
+            PlayerPrefs.SetString("VideoUrl", "https://youtu.be/rqThnrkB-jc");
         }
      
         if (setCategory == "chronic")
         {
-            PlayerPrefs.SetString("VideoUrl", "https://youtu.be/AW78uVJfm44");
+            PlayerPrefs.SetString("VideoUrl", "https://youtu.be/hUhVRqTxFkk");
         }
         if (setCategory == "dependent")
 
